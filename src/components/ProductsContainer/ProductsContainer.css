@@ -1,0 +1,30 @@
+.productscontainer-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.products-sub-heading-container{
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.slider-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.view-more{
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+
+@media (max-width:600px) {
+    .products-sub-heading-container h4{
+        font-size: .8rem;
+    }
+}

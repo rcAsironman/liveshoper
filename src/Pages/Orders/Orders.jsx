@@ -1,0 +1,50 @@
+import React from 'react'
+import { Link, Outlet,useNavigate } from 'react-router-dom'
+import "./Orders.css"
+import { useState } from 'react'
+
+const Orders = () => {
+   const [activeLink, setactiveLink] = useState("Ongoing");
+   console.log(activeLink);
+   
+  return (
+    <div>
+      <div className="orders-wrapper">
+        <div className="orders-top">
+          <Link
+            onClick={() => setactiveLink("Ongoing")}
+            className="link "
+            to="/orders/ongoing"
+          >
+            <p
+              className={`orders-link  ${
+                activeLink === "Ongoing" ? "present-link" : ""
+              } `}
+            >
+              Ongoing
+            </p>
+          </Link>
+          <Link
+            onClick={() => setactiveLink("Completed")}
+            className="link "
+            to="/orders/ordercompleted"
+          >
+            <p
+              className={`orders-link  ${
+                activeLink === "Completed" ? "present-link" : ""
+              } `}
+            >
+              {" "}
+              Completed
+            </p>
+          </Link>
+        </div>
+        <div className="orders-bottom">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Orders

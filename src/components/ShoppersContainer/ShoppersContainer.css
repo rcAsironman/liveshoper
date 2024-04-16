@@ -1,0 +1,12 @@
+.productcontainer-top{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}

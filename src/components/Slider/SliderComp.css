@@ -1,0 +1,94 @@
+
+.slider-card-container {
+    margin: 0 0 0 1rem;
+    outline: none;
+    border: none;
+    position: relative;
+}
+
+.slider-container {
+
+    position: relative;
+}
+
+.swiper{
+    width: 100%;
+}
+
+.swiper-btns{
+
+  display: flex;
+    justify-content: space-between;
+   
+}
+.swiper-button-prev{
+    position: absolute;
+    transform: rotate(180deg);
+    color: black;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        background: rgb(232, 228, 228);
+        border-radius: 50%;
+        border: none;
+        padding: 1rem;
+        position: absolute;
+       top: 9rem;
+       left: 0;
+        z-index: 1000;
+}
+.swiper-button-next{
+    position: absolute;
+    color: black;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        background: rgb(232, 228, 228);
+        border-radius: 50%;
+        border: none;
+        padding: 1rem;
+        position: absolute;
+        top: 9rem;
+        right: 0;
+        z-index: 1000;
+}
+
+.swiper-wrapper{
+    
+}
+@media (max-width:768px) {
+    .swiper-wrapper{
+        margin-left: .8rem;
+    }
+    .swiper-button-next,.swiper-button-prev{
+        top: 6rem;
+    }
+}
+
+@media (max-width:480px) {
+
+    .slider-card-container {
+        margin: 0 0 0 .6rem
+    }
+
+    .swiper-wrapper{
+        margin-left: 0;
+    }
+   
+
+    
+}
+
+@media (max-width:376px) {
+    .slider-card-container{
+        margin: 0;
+    }
+    .swiper-slide{
+        display: flex;
+        justify-content: center;
+    }
+}

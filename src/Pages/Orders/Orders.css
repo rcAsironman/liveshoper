@@ -1,0 +1,35 @@
+.orders-top{
+    display: flex;
+    gap: 1rem;
+}
+.orders-wrapper{
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.orders-link{
+    border-radius: 4px;
+    padding: .6rem 1rem;
+    font-weight: 600;
+}
+.orders-link:hover{
+    background: rgb(201, 201, 201);
+}
+
+.orders-bottom{
+    height: 90vh;
+    overflow-y: scroll;
+    
+}
+
+.present-link
+ {
+    background: rgb(215, 215, 215);
+    border-radius: 4px;
+}
+
+@media (max-width:600px) {
+    .orders-wrapper{
+        padding: .6rem 0.2rem 0 .2rem;
+    }
+}

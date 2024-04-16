@@ -1,0 +1,49 @@
+.suggestions-wrapper {
+    position: absolute;
+    width: 300px;
+    top: 4rem;
+    left: -.7rem;
+    background: whitesmoke;
+    border-radius: 4px;
+    color: black;
+    overflow-y: auto;
+    height: 400px;
+}
+
+.suggestions-display {
+    padding: 10px;
+    color: black;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.close{
+    position: absolute;
+    right: 0;
+    border: none;
+    padding:4px;
+    cursor: pointer;
+    border-radius: 4px;
+    background:transparent;
+}
+.suggestions-display img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+@media (max-width:768px) {
+    .suggestions-wrapper {
+        right: -1rem;
+        margin: 0 auto;
+        width: 100%;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+    }
+
+    .suggestions-display {
+        width: 100%;
+    }
+}
