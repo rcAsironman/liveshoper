@@ -25,10 +25,10 @@ const SearchSuggestions = ({ searchSuggestions, toggleSuggestions }) => {
       <ul>
         {searchSuggestions?.slice(0).map((suggestion) => (
           <Link to={`/products/${suggestion.id}`} key={suggestion.id}>
-            <li className="suggestions-display">
-              <span> {suggestion.title} </span>
-              <img src={suggestion.images[2]} alt="" width={20} />
-            </li>
+            <div className="suggestions-display">
+              <span className="product-name"> {suggestion.title} </span>
+              <img src={suggestion.images[2]} className="product-image" alt="" width={20} />
+            </div>
           </Link>
         ))}
       </ul>

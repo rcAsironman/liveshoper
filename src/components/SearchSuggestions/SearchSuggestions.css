@@ -8,15 +8,26 @@
     color: black;
     overflow-y: auto;
     height: 400px;
+    width: 300px;
 }
+
+/* Custom scrollbar styles */
+.suggestions-wrapper::-webkit-scrollbar {
+    width: 4px; /* Customize scrollbar width */
+  }
+  
+  .suggestions-wrapper::-webkit-scrollbar-thumb {
+    background-color: #000; /* Customize thumb color */
+    border-radius: 4px; /* Round the thumb corners */
+  }
 
 .suggestions-display {
     padding: 10px;
-    color: black;
+    color: gray;
     display: flex;
     gap: 1.5rem;
     justify-content: space-between;
-    width: 100%;
+    width: 280px;
 
 }
 .close{
@@ -33,6 +44,10 @@
     height: 50px;
     width: 50px;
 }
+.product-name{
+    width: 100%;
+}
+
 
 @media (max-width:768px) {
     .suggestions-wrapper {
