@@ -123,4 +123,10 @@
         height: 100%;
         width: 100%;
     }
+
+    .back-btn{
+        font-weight: 900;
+        font-size: large;
+        padding: 10px 5px;
+    }
 }

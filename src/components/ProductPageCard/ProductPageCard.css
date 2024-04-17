@@ -293,6 +293,13 @@
         margin-top: 5px;
         font-size: .8rem;
     }
+    .back{
+        font-size: large;
+        font-weight: 900;
+        display: flex;
+        position: relative;
+        left: -150px;
+    }
 }
 
 @media (max-width:500px) {

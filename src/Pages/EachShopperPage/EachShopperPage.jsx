@@ -9,7 +9,7 @@ const EachShopperPage = () => {
       <div className="profile-form-container">
         <div className="profile-details">
           <div className="profile-picture">
-            <img src="../../speaker.jpg" alt="" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/220px-Outdoors-man-portrait_%28cropped%29.jpg" alt="" />
           </div>
           <div className="profile-details ">
             <div className="name shopper-detail">

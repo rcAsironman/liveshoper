@@ -3,8 +3,11 @@ import "./ProductPageCard.css";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart,increaseQuantity,decreaseQuantity,removeFromCart } from "../../Slices/CartSlice";
+import { useNavigate } from 'react-router-dom';
 
 const ProductPageCard = ({ productid }) => {
+
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const productId = productid;
   console.log(productId);
@@ -12,6 +15,12 @@ const ProductPageCard = ({ productid }) => {
   console.log(item);
   const dispatch = useDispatch();
   const [isProductInCart, setIsProductInCart] = useState(false);
+
+  const handleGoBack = () => {
+    navigate(-1); // This will navigate back to the previous page
+  };
+
+
   useEffect(() => {
     if (item) {
       setIsProductInCart(true);
@@ -48,6 +57,7 @@ const ProductPageCard = ({ productid }) => {
 
   return (
     <div className="productcard">
+      <div className="back" onClick={()=>{handleGoBack()}}>back</div>
       <div className="productcard-left">
         <div className="productcard-img">
           <img
