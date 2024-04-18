@@ -4,7 +4,7 @@
 }
 .orders-wrapper{
     padding: 1rem;
-    max-width: 1400px;
+    max-width: 90%;
     margin: 0 auto;
 }
 .orders-link{
@@ -17,11 +17,23 @@
 }
 
 .orders-bottom{
-    height: 90vh;
-    overflow-y: scroll;
+    height: 500px;
+    overflow-y: auto;
     
 }
-
+/* WebKit (Chrome, Safari, etc.) */
+.orders-bottom::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .orders-bottom::-webkit-scrollbar-track {
+    background: rgb(236, 232, 232);
+  }
+  
+  .orders-bottom::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 20px;
+  }
 .present-link
  {
     background: rgb(215, 215, 215);
@@ -31,5 +43,6 @@
 @media (max-width:600px) {
     .orders-wrapper{
         padding: .6rem 0.2rem 0 .2rem;
+        height: 70vh;
     }
 }

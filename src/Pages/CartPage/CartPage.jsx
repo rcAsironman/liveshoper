@@ -7,8 +7,12 @@ import {
 } from "../../Slices/CartSlice";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
+import Lottie from "lottie-react";
+import loading from "../../lottie/loading.json"
 const CartPage = () => {
+
+  const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
   const cart = useSelector((state) => state.cart);
   console.log(cart);
 
@@ -20,7 +24,7 @@ const CartPage = () => {
       Cart is empty
     </div>
   ) : (
-    <div className="wrapper">
+    <div className="cart-wrapper">
       <div className="cart-container ">
         {cart.map((eachProd) => (
           <div className="prod" key={eachProd.id}>
@@ -64,16 +68,24 @@ const CartPage = () => {
             </div>
           </div>
         ))}
-        <div className="btn-container">
-          <Link to="/">
-            <button className="card-btn">Add more items</button>
-          </Link>
-          <button className="card-btn">Checkout</button>
+        <div className="btn-container" onClick={()=>{}}>
+         {
+           !isCheckoutSuccess? (<>Checkout</>) 
+           : 
+           (<div>
+            <Lottie animationData={loading}></Lottie>
+           </div>)
+         } 
+         
         </div>
       </div>
       <div className="cart-total">
-        <h3>Total Cart Value :</h3>
-        <p>{totalAmount}$</p>
+        <div>
+        <h3>Total Cart Value : ${totalAmount}</h3>
+        </div>
+        <Link to="/">
+            <button className="card-btn">Add more items</button>
+          </Link>
       </div>
     </div>
   );

@@ -31,13 +31,20 @@
 
 }
 .close{
-    position: absolute;
-    right: 0;
+    position: sticky;
+    top: 0;
+    margin-left: 250px;
+    margin-top: 10px;
     border: none;
-    padding:4px;
+    padding:10px;
     cursor: pointer;
-    border-radius: 4px;
-    background:transparent;
+    border-radius: 50%;
+    background:black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 .suggestions-display img{
     border-radius: 50%;
@@ -59,6 +66,11 @@
     }
 
     .suggestions-display {
+        width: 290px;
+        color: black
+    }
+    .product-name{
         width: 100%;
+
     }
 }

@@ -1,7 +1,7 @@
 .profile-form-container{
     display: flex;
     justify-content: space-around;
-    height: 48vh;
+    height: auto;
     gap: 1rem;
     margin-bottom: .5rem;
 }
@@ -33,7 +33,11 @@ textarea,.shopper-input{
 #message{
     width: 100%;
 }
-
+.preferred-language{
+    border: 1px solid gainsboro;
+    padding:1rem;
+    border-radius: 4px;
+}
 
 @media (max-width:600px) {
     .profile-form-container{

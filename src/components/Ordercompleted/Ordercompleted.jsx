@@ -189,16 +189,18 @@ const Ordercompleted = () => {
             return (
               <div key={cartItems.id}>
                 <div className=" cartitems-format  cartitem-format-main">
+                  <div className='product-image'>
                   <img
                     src={item.images[0]}
                     alt=""
                     className="carticon-product-icon"
                   />
-                  <p>{item.title} </p>
+                  </div>
+                  <div className='product-title'>{item.title} </div>
 
                  
 
-                  <p>${item.price} </p>
+                  <div className='product-price'>${item.price} </div>
                 </div>
                 <hr />
               </div>

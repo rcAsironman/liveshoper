@@ -5,6 +5,10 @@
     justify-items: center;
 }
 
+.back-btn{
+    font-weight: 900;
+    cursor: pointer;
+}
 
 
 @media (max-width:1024px) {

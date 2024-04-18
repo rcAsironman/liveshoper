@@ -47,9 +47,14 @@ const EachShopperPage = () => {
               />
             </div>
           </div>
+          <div>
+            <label>preferred language</label>
+            <br/>
+              <input type="text" placeholder="enter language" className="preferred-language"></input>
+          </div>
           <div className="message-textarea">
             <label htmlFor="message">List Of Items:</label>
-            <textarea id="message" name="message" rows="8" cols="50" />
+            <textarea id="message" name="message" rows="8" cols="50" placeholder="Enter Items Eg: 1) item1,2) item 2"/>
           </div>
         <button className="card-btn">Book Now</button>
         </div>
