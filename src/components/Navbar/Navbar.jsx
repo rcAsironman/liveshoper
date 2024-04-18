@@ -120,6 +120,16 @@ const logout = () => {
               )}
               <li className="nav-link">
                 <Link
+                  onClick={() => setactiveLink("call")}
+                  className={`${activeLink === "call" ? "active" : ""}`}
+                  id="link"
+                  to="/"
+                >
+                  Call
+                </Link>
+              </li>
+              <li className="nav-link">
+                <Link
                   className={`${activeLink === "login" ? "active" : ""}`}
                   onClick={() => {
                     setactiveLink("login");
@@ -131,16 +141,7 @@ const logout = () => {
                   {isAuthenticated ? "Logout" : "Login"}
                 </Link>
               </li>
-              <li className="nav-link">
-                <Link
-                  onClick={() => setactiveLink("call")}
-                  className={`${activeLink === "call" ? "active" : ""}`}
-                  id="link"
-                  to="/"
-                >
-                  Call
-                </Link>
-              </li>
+              
             </ul>
           </div>
           <div className="mobile-nav">
@@ -203,15 +204,16 @@ const logout = () => {
                   </>
                 )}
                 <li className="nav-link">
-                  <Link onClick={() => logout()} id="link" to="/Login">
-                    {isAuthenticated ? "Logout" : "Login"}
-                  </Link>
-                </li>
-                <li className="nav-link">
                   <Link id="link" to="/">
                     Call
                   </Link>
                 </li>
+                <li className="nav-link">
+                  <Link onClick={() => logout()} id="link" to="/Login">
+                    {isAuthenticated ? "Logout" : "Login"}
+                  </Link>
+                </li>
+                
               </ul>
             </div>
           )}
