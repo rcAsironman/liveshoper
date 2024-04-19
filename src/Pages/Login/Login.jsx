@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toggleState } from "../../Slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import video from "../../video/video-login.mp4"
 const Login = () => {
   const [state, setState] = useState("Login");
   const [formData, setformData] = useState({
@@ -82,7 +82,8 @@ const Login = () => {
     <div>
       <div className="loginsignup">
         <div className="left">
-                <h1>Branding</h1>
+<video src={video} autoPlay={true} loop={true}></video>
+                
         </div>
         <div className="right">
 

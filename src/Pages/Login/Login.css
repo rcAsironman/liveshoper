@@ -1,24 +1,28 @@
 .loginsignup {
     width: 100%;
+    height: 100%;
     display: flex;
-    height: auto;
-    background: white;
-    padding-top: 50px;
-    margin-bottom: 2rem;
+    background-color: rgb(243, 237, 237);
 }
 
 .loginsignup-container {
-    width: 440px;
     height: auto;
-    margin: auto;
-    border: 2px solid #c9c9c9;
     padding: 20px 60px;
     border-radius: 10px;
 }
 .left{
-    width: 60%;
+    width: 75%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(16, 9, 1);
 }
 
+.left video{
+    width: 100%;
+    height: 100%;
+}
 .loginsignup-container h1 {
     margin: 20px 0px;
 }
@@ -67,11 +71,13 @@
     cursor: pointer;
 }
 
-
+.video video{
+    height: auto;
+    width: 100%;
+}
 
 @media (max-width:1280px) {
     .loginsignup {
-        padding-top: 30px;
     }
 
     .loginsignup-container {
@@ -122,9 +128,10 @@
 @media (max-width:600px) {
 
     .loginsignup-container {
-        height: auto;
+        height: 100vh;
         padding: 1rem;
         max-width: 350px;
+        
     }
 
     .loginsignup-container h1 {
@@ -141,6 +148,7 @@
     }
     .left{
         display: none;
+        background-color: aqua;
     }
     .loginsignup-container button {
 
