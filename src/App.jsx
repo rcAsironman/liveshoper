@@ -20,7 +20,7 @@ import Modal from "./components/Modal/Modal"; // Import Modal component
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [showModal, setShowModal] = useState(false);
-  const [showNavbarAndFooter, setShowNavbarAndFooter] = useState(true);
+  const [showNavbarAndFooter, setShowNavbarAndFooter] = useState(false);
   const location = useLocation();
 
   useEffect(() => {

@@ -1,11 +1,18 @@
 import React from "react";
 import "./EachShopperPage.css"; // Styling for the component
 import { useSearchParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const EachShopperPage = () => {
+
+  const navigate = useNavigate();
   const { id } = useSearchParams();
+  const handleGoBack = () => {
+    navigate(-1)
+  }
+  
   return (
     <div className="wrapper">
+      <div className='back-btn' onClick={()=>handleGoBack()}>back</div>
       <div className="profile-form-container">
         <div className="profile-details">
           <div className="profile-picture">

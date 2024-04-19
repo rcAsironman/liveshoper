@@ -15,7 +15,9 @@ const CartPage = () => {
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
   const cart = useSelector((state) => state.cart);
   console.log(cart);
-
+  const handleCheckout = () => {
+    setIsCheckoutSuccess(!isCheckoutSuccess)
+  }
   const dispatch = useDispatch();
   const totalAmount = cart.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0);
 
@@ -68,7 +70,7 @@ const CartPage = () => {
             </div>
           </div>
         ))}
-        <div className="btn-container" onClick={()=>{}}>
+        <div className="btn-container" onClick={()=>{handleCheckout()}}>
          {
            !isCheckoutSuccess? (<>Checkout</>) 
            : 

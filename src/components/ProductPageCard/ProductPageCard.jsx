@@ -57,7 +57,7 @@ const ProductPageCard = ({ productid }) => {
 
   return (
     <div className="productcard">
-      <div className="back" onClick={()=>{handleGoBack()}}>back</div>
+    <div className="back-btn-in-product" onClick={()=>{handleGoBack()}}>back</div>
       <div className="productcard-left">
         <div className="productcard-img">
           <img

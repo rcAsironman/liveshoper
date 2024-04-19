@@ -116,6 +116,13 @@
     font-weight: 600;
 }
 
+.back-btn-in-product{
+    position: absolute;
+    top: 120px;
+    left: 20px;
+    font-weight: 900;
+    cursor: pointer;
+}
 @media (max-width:1280px) {
     .productcard {
         margin: 0px 60px;
