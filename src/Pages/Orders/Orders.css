@@ -17,7 +17,7 @@
 }
 
 .orders-bottom{
-    height: 500px;
+    height: 450px;
     overflow-y: auto;
     
 }
@@ -40,9 +40,26 @@
     border-radius: 4px;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
     .orders-wrapper{
         padding: .6rem 0.2rem 0 .2rem;
-        height: 70vh;
+        height: 600px;
     }
+    .orders-bottom{
+        height: 520px;
+    }
+
+    /* WebKit (Chrome, Safari, etc.) */
+.orders-bottom::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .orders-bottom::-webkit-scrollbar-track {
+    background: rgb(236, 232, 232);
+  }
+  
+  .orders-bottom::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 20px;
+  }
 }

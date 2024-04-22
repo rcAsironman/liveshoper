@@ -163,7 +163,8 @@
     .cartitem-format-main{
         display: flex;
         justify-content: space-evenly;
-        height: auto;
+        height: 100px;
+
     }
     .cartitems-format{
         display: flex;

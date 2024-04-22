@@ -3,11 +3,9 @@ import "./ProductPageCard.css";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart,increaseQuantity,decreaseQuantity,removeFromCart } from "../../Slices/CartSlice";
-import { useNavigate } from 'react-router-dom';
 
 const ProductPageCard = ({ productid }) => {
 
-  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const productId = productid;
   console.log(productId);
@@ -57,7 +55,6 @@ const ProductPageCard = ({ productid }) => {
 
   return (
     <div className="productcard">
-    <div className="back-btn-in-product" onClick={()=>{handleGoBack()}}>back</div>
       <div className="productcard-left">
         <div className="productcard-img">
           <img
@@ -76,7 +73,7 @@ const ProductPageCard = ({ productid }) => {
         <div className="productcard-right-prices">
           <div className="productcard-right-price-old">${product.price}</div>
           <div className="productcard-right-price-new">
-            ${product.new_price}
+            ${product.discountPercentage}
           </div>
         </div>
         <div className="productcard-right-description">

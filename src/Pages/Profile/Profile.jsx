@@ -5,10 +5,10 @@ import { FaRegSave } from "react-icons/fa";
 
 const Profile = () => {
   const [userDetails, setuserDetails] = useState({
-    firstName: "Sai",
-    lastName: "Manikanta",
+    firstName: "karthik",
+    lastName: "Mangineni",
     password: "12345678",
-    email: "sai@gmail.com",
+    email: "karthik@gmail.com",
   });
   const [isEditable, setisEditable] = useState(false);
 
