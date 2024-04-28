@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const AuthSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuthenticated: true, // Initial state of authentication
+    isAuthenticated: false, // Initial state of authentication
   },
   reducers: {
     toggleState(state,action) {

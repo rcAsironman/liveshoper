@@ -14,10 +14,13 @@ import EachShopperPage from "./Pages/EachShopperPage/EachShopperPage";
 import CartPage from "./Pages/CartPage/CartPage";
 import OnGoingProducts from "./components/OnGoingProducts/OnGoingProducts";
 import Ordercompleted from "./components/Ordercompleted/Ordercompleted";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "./components/Modal/Modal"; // Import Modal component
+import { toggleState } from "./Slices/AuthSlice";
+import Cookies from "js-cookie";
 
 const App = () => {
+  const dispatch = useDispatch()
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [showModal, setShowModal] = useState(false);
   const [showNavbarAndFooter, setShowNavbarAndFooter] = useState(false);
@@ -25,6 +28,11 @@ const App = () => {
 
   useEffect(() => {
     // Check if the URL contains "/login"
+    if(Cookies.get('token'))
+    {
+      dispatch(toggleState(true))
+      console.log(Cookies.get('token'))
+    }
     console.log(location.pathname);
     setShowNavbarAndFooter(!location.pathname.includes("/Login"));
   }, [location]);

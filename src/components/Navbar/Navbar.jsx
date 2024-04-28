@@ -9,6 +9,7 @@ import { CgClose } from "react-icons/cg";
 import { FaCartPlus } from "react-icons/fa";
 import {useDispatch} from "react-redux"
 import { toggleState } from "../../Slices/AuthSlice";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
 
@@ -41,6 +42,7 @@ const logout = () => {
   if (isAuthenticated) {
     dispatch(toggleState(false)); // Set isAuthenticated to false
   }
+  Cookies.remove('token')
   navigate("/login"); // Navigate to the login route
 };
 

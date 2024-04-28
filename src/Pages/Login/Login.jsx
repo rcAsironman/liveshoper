@@ -5,8 +5,17 @@ import { useState } from "react";
 import { toggleState } from "../../Slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import video from "../../video/video-login.mp4"
+import axios from "axios";
+import Cookies from 'js-cookie';
+
+
 const Login = () => {
+
+
+   // Calculate expiration time
+   const expirationDate = new Date();
+   expirationDate.setDate(expirationDate.getDate() + 7);
+
   const [state, setState] = useState("Login");
   const [formData, setformData] = useState({
     username: "",
@@ -14,6 +23,8 @@ const Login = () => {
     number: "",
     email: "",
   });
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -25,67 +36,68 @@ const Login = () => {
 
 
    useEffect(() => {
-     if (isAuthenticated) {
-       navigate("/"); // Redirect to home page after authentication
-     }
-   }, [isAuthenticated, navigate]);
+    console.log("Hello first entered into this one")
+    if(Cookies.get('token') !== undefined)
+    {
+      console.log("Token is already generated ", Cookies.get('token'))
+      dispatch(toggleState(true))
+      navigate("/")
+
+    }
+   }, []);
 
   const login =async () => {
-    console.log("login");
-    console.log(formData);
-     dispatch(toggleState(true));
-    // let responseData;
-    // await fetch("", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/form-data",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => (responseData = data));
 
-    // if (responseData.success) {
-    //   localStorage.setItem("auth-token", responseData.token);
-    //   window.location.replace("/");
-    // } else {
-    //   alert(responseData.error);
-    // }
+    
+    axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
+    .then((response)=>{
+      console.log(response.data)
+      const token = response.data.data['token']
+      if(response.status === 200)
+      {
+        Cookies.set('token', token, { expires: expirationDate })
+        dispatch(toggleState(true))
+        navigate("/")
+      }
+    })
+    .catch((error)=>{
+      console.log(error)
+      alert(error)
+    })
+  };
+
+  const postData = {
+    userName: formData.username,
+    email: formData.email,
+    mblNum: formData.number,
+    password: formData.password,
+    reEnterPassword: formData.password,
+    rolesId: 1
   };
 
   const signUp = async () => {
+
+
+    axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/save-user`,postData)
+    .then((response)=>{
+      if(response.status === 200)
+      {
+        login()
+      }
+    })
+    .catch((error)=>{
+      alert(error)
+    })
     console.log("signup");
     console.log(formData);
       navigate("/login")
       setState("Login")
     let responseData;
-    // await fetch("", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/form-data",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => (responseData = data));
-
-    // if (responseData.success) {
-    //   localStorage.setItem("auth-token", responseData.token);
-    //   window.location.replace("/");
-    // } else {
-    //   alert(responseData.error);
-    // }
+  
   };
   return (
     <div>
       <div className="loginsignup">
-        <div className="left">
-<video src={video} autoPlay={true} loop={true}></video>
-                
-        </div>
-        <div className="right">
 
         <div className="loginsignup-container">
           <h1>{state}</h1>
@@ -144,7 +156,6 @@ const Login = () => {
               <span onClick={() => setState("Register")}>Register here</span>
             </p>
           )}
-        </div>
         </div>
       </div>
     </div>
