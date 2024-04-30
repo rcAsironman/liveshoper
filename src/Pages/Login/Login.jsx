@@ -7,22 +7,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
-
+import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import loading2 from "../../lottie/loading2.json"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
 
-   // Calculate expiration time
-   const expirationDate = new Date();
-   expirationDate.setDate(expirationDate.getDate() + 7);
+  // Calculate expiration time
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 7);
 
-  const [state, setState] = useState("Login");
+  const [isValidEmail, setIsValidEmail] = useState(null);
+  const [isValidPassword, setIsValidPassword] = useState(null);
+  const [isLoadingActive, setIsLoadingActive] = useState(false);
+
+ 
   const [formData, setformData] = useState({
     username: "",
     password: "",
     number: "",
     email: "",
   });
+
+
 
 
   const dispatch = useDispatch();
@@ -35,35 +45,56 @@ const Login = () => {
   };
 
 
-   useEffect(() => {
+  useEffect(() => {
     console.log("Hello first entered into this one")
-    if(Cookies.get('token') !== undefined)
-    {
+    if (Cookies.get('token') !== undefined) {
       console.log("Token is already generated ", Cookies.get('token'))
       dispatch(toggleState(true))
       navigate("/")
 
     }
-   }, []);
+  }, []);
 
-  const login =async () => {
 
-    
+  const handleEmailChange = () => {
+    const value  = formData.email;
+    const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    setIsValidEmail(regex.test(value));
+  };
+
+  const handlePasswordChange = () => {
+    const value  = formData.password;
+    const regex =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+    setIsValidPassword(regex.test(value));
+  };
+ 
+  const handleLoginFailure = () => {
+    toast.error("Incorrect emial or password",{
+      className: 'toast-error'
+    });
+  }
+
+  const login = async () => {
+
+
+    setIsLoadingActive(true)
     axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
-    .then((response)=>{
-      console.log(response.data)
-      const token = response.data.data['token']
-      if(response.status === 200)
-      {
-        Cookies.set('token', token, { expires: expirationDate })
-        dispatch(toggleState(true))
-        navigate("/")
-      }
-    })
-    .catch((error)=>{
-      console.log(error)
-      alert(error)
-    })
+      .then((response) => {
+        console.log(response.data)
+        const token = response.data.data['token']
+        if (response.status === 200) {
+          Cookies.set('token', token, { expires: expirationDate })
+          dispatch(toggleState(true));
+          setIsLoadingActive(false);
+          navigate("/");
+        }
+
+      })
+      .catch((error) => {
+        setIsLoadingActive(false);
+        handleLoginFailure();
+        
+      })
   };
 
   const postData = {
@@ -75,89 +106,62 @@ const Login = () => {
     rolesId: 1
   };
 
-  const signUp = async () => {
-
-
-    axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/save-user`,postData)
-    .then((response)=>{
-      if(response.status === 200)
-      {
-        login()
-      }
-    })
-    .catch((error)=>{
-      alert(error)
-    })
-    console.log("signup");
-    console.log(formData);
-      navigate("/login")
-      setState("Login")
-    let responseData;
-  
-  };
   return (
     <div>
       <div className="loginsignup">
 
         <div className="loginsignup-container">
-          <h1>{state}</h1>
           <div className="loginsignup-fields">
-            {state === "Register" ? (
-              <>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  name="username"
-                  onChange={formDataHandler}
-                  value={formData.username}
-                />
-                <input
-                  type="tel"
-                  placeholder="Number"
-                  name="number"
-                  value={formData.number}
-                  onChange={formDataHandler}
-                />
-              </>
-            ) : (
-              <></>
-            )}
+
+            <div style={{ fontSize: 'xx-large', fontWeight: '500' }}>Login</div>
             <input
               type="email"
               placeholder="Email"
               name="email"
               value={formData.email}
               onChange={formDataHandler}
+              style={{
+                border : isValidEmail === false ? '1px solid red' : ''
+              }}
             />
-
+               {isValidEmail == false && <div className="error">enter a valid email</div> }
             <input
               type="password"
               placeholder="Password"
               name="password"
               value={formData.password}
               onChange={formDataHandler}
+              style={{
+                border : isValidPassword === false ? '1px solid red' : ''
+              }}
             />
+             {isValidPassword == false && <div className="error">enter a valid password</div> }
           </div>
           <button
             onClick={() => {
-              state === "Login" ? login() : signUp();
+              handleEmailChange()
+              handlePasswordChange()
+              if(isValidEmail === true && isValidPassword === true)
+              {
+              login();
+            }
             }}
           >
-            Continue
+           {
+             isLoadingActive=== false?  "Continue" : <Lottie className="loading2" animationData={loading2}/>
+           }
           </button>
-          {state === "Register" ? (
-            <p className="loginsignup-login">
-              Already have an account?{" "}
-              <span onClick={() => setState("Login")}>Login here</span>
-            </p>
-          ) : (
-            <p className="loginsignup-login">
-              Create an account?{" "}
-              <span onClick={() => setState("Register")}>Register here</span>
-            </p>
-          )}
+
+          <p className="loginsignup-login">
+            Create an account?
+            <Link to="/signUp"><p style={{ color: 'blue' }}>Register here</p></Link>
+          </p>
+
+          
         </div>
+        <ToastContainer />
       </div>
+      
     </div>
   );
 };

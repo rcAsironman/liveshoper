@@ -18,10 +18,11 @@ const Navbar = () => {
   const [isSearchOpen, setisSearchOpen] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
-     const [activeLink, setactiveLink] = useState("home");
+  const [activeLink, setactiveLink] = useState("home");
   console.log(isAuthenticated);
   let cartCount = useSelector((state) => state.cart.length);
   console.log(cartCount);
+
 
   const toggleMenu = () => {
     setisSearchOpen(false);
@@ -134,7 +135,13 @@ const logout = () => {
                 <Link
                   className={`${activeLink === "login" ? "active" : ""}`}
                   onClick={() => {
-                    setactiveLink("login");
+                    if(isAuthenticated)
+                    {
+                      setactiveLink("login")
+                    }
+                    else{
+                    setactiveLink("home");
+                    }
                     logout();
                   }}
                   id="link"

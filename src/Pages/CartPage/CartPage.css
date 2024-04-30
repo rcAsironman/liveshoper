@@ -1,8 +1,19 @@
 .cart-wrapper{
     height: auto;
     padding: 20px;
+    margin-bottom: 100px;
 }
-
+.cart-back-btn{
+    margin-top: 0px;
+    background-color: rgb(212, 212, 212);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
 .cart-card {
     display: flex;
     justify-content: space-between;

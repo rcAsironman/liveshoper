@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./components/Modal/Modal"; // Import Modal component
 import { toggleState } from "./Slices/AuthSlice";
 import Cookies from "js-cookie";
+import SignUp from "./Pages/SignUp/SignUp";
 
 const App = () => {
   const dispatch = useDispatch()
@@ -153,6 +154,10 @@ const App = () => {
             )
           }
         />
+        <Route 
+         path="/signUp"
+         element={<SignUp/>}
+        ></Route>
       </Routes>
       {showNavbarAndFooter && <Footer />}
     </div>

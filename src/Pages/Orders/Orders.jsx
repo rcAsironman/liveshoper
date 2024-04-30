@@ -2,14 +2,21 @@ import React from 'react'
 import { Link, Outlet,useNavigate } from 'react-router-dom'
 import "./Orders.css"
 import { useState } from 'react'
+import { FaArrowLeft} from 'react-icons/fa'
 
 const Orders = () => {
    const [activeLink, setactiveLink] = useState("Ongoing");
    console.log(activeLink);
-   
+   const navigation = useNavigate()
+   const handleBack = () => {
+     navigation("/");
+   }
+
   return (
     <div>
+      <div className="back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
       <div className="orders-wrapper">
+        
         <div className="orders-top">
           <Link
             onClick={() => setactiveLink("Ongoing")}

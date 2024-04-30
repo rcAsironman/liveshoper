@@ -2,6 +2,7 @@ import React from "react";
 import "./EachShopperPage.css"; // Styling for the component
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft} from 'react-icons/fa'
 const EachShopperPage = () => {
 
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const EachShopperPage = () => {
   
   return (
     <div className="wrapper">
-      <div className='back-btn' onClick={()=>handleGoBack()}>back</div>
+      <div className="back-btn" onClick={()=> handleGoBack()}><FaArrowLeft/></div>
       <div className="profile-form-container">
         <div className="profile-details">
           <div className="profile-picture">

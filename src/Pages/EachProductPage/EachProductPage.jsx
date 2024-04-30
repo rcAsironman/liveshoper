@@ -5,6 +5,7 @@ import ProductPageCard from '../../components/ProductPageCard/ProductPageCard';
 import DescriptionBox from '../../components/DescriptionBox/DescriptionBox';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft} from 'react-icons/fa'
 
 
 
@@ -19,7 +20,7 @@ const EachProductPage = (props) => {
 };
  return (
    <div className="product-wrapper" onClick={window.scrollTo(0, 0)}>
-        <div className="back-btn-in-each-product" onClick={()=>{handleGoBack()}}>back</div>
+      <div className="back-btn" onClick={()=> handleGoBack()}><FaArrowLeft/></div>
      <ProductPageCard productid={id} />
      <DescriptionBox />
    </div>

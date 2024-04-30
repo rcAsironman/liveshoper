@@ -7,13 +7,23 @@ import {
 } from "../../Slices/CartSlice";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, } from "react";
 import Lottie from "lottie-react";
 import loading from "../../lottie/loading.json"
+import { FaArrowLeft} from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
 const CartPage = () => {
 
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
   const cart = useSelector((state) => state.cart);
+
+  const navigation = useNavigate()
+  const handleBack = () => {
+    navigation(-1);
+  }
+
+ 
+
   console.log(cart);
   const handleCheckout = () => {
     setIsCheckoutSuccess(!isCheckoutSuccess)
@@ -21,13 +31,17 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const totalAmount = cart.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0);
 
-  return cart.length===0 ? (
-    <div className="cart-state ">
+  return cart.length == 0 ? (
+   <div>
+      <div className="back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
+     <div className="cart-state ">
       Cart is empty
     </div>
+   </div>
   ) : (
     <div className="cart-wrapper">
       <div className="cart-container ">
+      <div className="cart-back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
         {cart.map((eachProd) => (
           <div className="prod" key={eachProd.id}>
             <div className="cart-card">

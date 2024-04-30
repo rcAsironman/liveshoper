@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Profile.css";
 import { FaEdit } from "react-icons/fa";
 import { FaRegSave } from "react-icons/fa";
+import { FaArrowLeft} from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [userDetails, setuserDetails] = useState({
@@ -22,10 +24,16 @@ const Profile = () => {
     e.preventDefault();
     setuserDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+  const navigation = useNavigate()
+  const handleBack = () => {
+    navigation("/");
+  }
+  
   return (
     <div className="wrapper">
+      <div style={{width: '40px', height: '40px', backgroundColor: 'rgb(212, 212, 212)', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '50%', marginBottom: '20px', cursor: 'pointer'}} className="allShop-back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
       <div className="profilepage-container">
+        
         <div className="profile-left">
           <img src="speaker.jpg" alt="" className="profile-image" />
         </div>

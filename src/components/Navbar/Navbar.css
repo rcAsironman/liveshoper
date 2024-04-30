@@ -29,10 +29,7 @@
     font-weight: 900;
 }
 
-.active{
-    background: white;
-    color: black !important;
-}
+
 
 .nav-links {
     display: flex;
