@@ -46,7 +46,7 @@ const App = () => {
 
   return (
     <div>
-      {showNavbarAndFooter && <Navbar />}
+      { <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
@@ -159,7 +159,7 @@ const App = () => {
          element={<SignUp/>}
         ></Route>
       </Routes>
-      {showNavbarAndFooter && <Footer />}
+      {<Footer />}
     </div>
   );
 };

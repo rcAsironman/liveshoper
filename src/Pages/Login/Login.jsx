@@ -113,7 +113,7 @@ const Login = () => {
         <div className="loginsignup-container">
           <div className="loginsignup-fields">
 
-            <div style={{ fontSize: 'xx-large', fontWeight: '500' }}>Login</div>
+            <div className='login-heading' style={{ fontSize: 'xx-large', fontWeight: '500' }}>Login</div>
             <input
               type="email"
               placeholder="Email"
@@ -148,7 +148,7 @@ const Login = () => {
             }}
           >
            {
-             isLoadingActive=== false?  "Continue" : <Lottie className="loading2" animationData={loading2}/>
+             isLoadingActive === false?  "Continue" : <Lottie className="loading2" animationData={loading2}/>
            }
           </button>
 
