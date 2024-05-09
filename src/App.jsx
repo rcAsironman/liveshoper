@@ -145,7 +145,7 @@ const App = () => {
           }
         />
         <Route
-          path="/products/:id"
+          path="/products"
           element={
             isAuthenticated ? (
               <EachProductPage />

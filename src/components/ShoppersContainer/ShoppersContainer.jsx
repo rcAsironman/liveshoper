@@ -1,13 +1,16 @@
 import React from "react";
 import "./ShoppersContainer.css";
-import SliderComp from "../Slider/SliderComp";
+import SliderComponentForShoper from "../sliderComponentForShopper/SliderComponentForShoper";
 import { Link } from "react-router-dom";
 import ProfileCard from "../../utils/ProfileCard/ProfileCard";
 
 const ShoppersContainer = () => {
+
+
+
   return (
     <div className="wrapper">
-      <div className="productcontainer-top">
+      <div className="productcontainer-top" >
         <h3>Shoppers Available now</h3>
         <p>
           <Link onClick={window.scrollTo(0, -20)} className="link" to="/shoppers">
@@ -17,7 +20,7 @@ const ShoppersContainer = () => {
         </p>
       </div>
       {/*pass data to slidercomponent for different categories */}
-      <SliderComp route={"shoppers"} Component={ProfileCard} />
+      <SliderComponentForShoper route={"shoppers"} Component={ProfileCard} />
     </div>
   );
 };

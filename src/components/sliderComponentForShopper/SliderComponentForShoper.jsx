@@ -1,18 +1,17 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
-import "./SliderComp.css";
+import "../Slider/SliderComp.css";
 import SliderSettings from "../../utils/SliderSettings/SliderSettings"
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import Data from "../../utils/Data";
+import { Link } from "react-router-dom";
 
-function SliderComp({ Component, productData }) {
+
+
+
+function SliderComponentForShoper({ route, Component }) {
+  console.log(route);
   const swiperRef = useRef(null);
-  const navigate = useNavigate(); // Use useNavigate hook for programmatic navigation
-
-  const handleClick = (item) => {
-    // Programmatic navigation to EachProductPage with data
-    navigate("/products", { state: { item } });
-  };
 
   return (
     <div className="slider-container">
@@ -20,11 +19,16 @@ function SliderComp({ Component, productData }) {
         <div>
           <SliderButtons />
         </div>
-        {productData.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="slider-card-container" onClick={() => handleClick(item)}>
-              <Component data={item} />
-            </div>
+        {Data.slice(0, 8).map((item) => (
+          <SwiperSlide key={item.id}>
+            <Link  to={`${route}/${item.id}`}>
+              <div
+                
+                className="slider-card-container"
+              >
+                <Component />
+              </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -32,7 +36,7 @@ function SliderComp({ Component, productData }) {
   );
 }
 
-export default SliderComp;
+export default SliderComponentForShoper;
 
 const SliderButtons = () => {
   const swiper = useSwiper();

@@ -3,6 +3,7 @@ import "./EachShopperPage.css"; // Styling for the component
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft} from 'react-icons/fa'
+import ScrollToTop from "../../components/ScrollToTop";
 const EachShopperPage = () => {
 
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const EachShopperPage = () => {
   
   return (
     <div className="wrapper">
+      <ScrollToTop/>
       <div className="back-btn" onClick={()=> handleGoBack()}><FaArrowLeft/></div>
       <div className="profile-form-container">
         <div className="profile-details">

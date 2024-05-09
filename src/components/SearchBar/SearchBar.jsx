@@ -1,6 +1,6 @@
 // SearchBar.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SearchBar.css";
 import Data from "../../utils/Data";
 import SearchSuggestions from "../SearchSuggestions/SearchSuggestions";
@@ -9,10 +9,28 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef(null);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+        setSearchTerm("")
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+
 
   const onSearch = async (searchTerm) => {
     if (searchTerm) {
@@ -40,6 +58,11 @@ const SearchBar = () => {
     return () => clearTimeout(debounce);
   }, [searchTerm]);
 
+  const closeSearch = () => {
+    setSearchTerm("");
+    setSearchSuggestions(false)
+  }
+
   return (
     <div className="search-container">
       <input
@@ -52,14 +75,17 @@ const SearchBar = () => {
       <button onClick={() => onSearch(searchTerm)} className="search-btn">
         Search
       </button>
-      <div className="search-suggestions-container">
+     
         {showSuggestions && (
-          <SearchSuggestions
+           <div className="search-suggestions-container" ref={searchRef}>
+          <SearchSuggestions  
+            closeSearch={closeSearch}
             searchSuggestions={searchSuggestions}
             toggleSuggestions={toggleSuggestions}
           />
+          </div>
         )}
-      </div>
+      
     </div>
   );
 };

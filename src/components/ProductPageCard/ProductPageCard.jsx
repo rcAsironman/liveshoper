@@ -4,20 +4,17 @@ import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart,increaseQuantity,decreaseQuantity,removeFromCart } from "../../Slices/CartSlice";
 
-const ProductPageCard = ({ productid }) => {
+const ProductPageCard = ({data}) => {
 
   const cart = useSelector((state) => state.cart);
-  const productId = productid;
-  console.log(productId);
   const item = cart.find((product) => product.id === 11);
-  console.log(item);
+ 
   const dispatch = useDispatch();
   const [isProductInCart, setIsProductInCart] = useState(false);
 
   const handleGoBack = () => {
     navigate(-1); // This will navigate back to the previous page
   };
-
 
   useEffect(() => {
     if (item) {
@@ -65,19 +62,19 @@ const ProductPageCard = ({ productid }) => {
         </div>
       </div>
       <div className="productcard-right">
-        <h1>{product.title} </h1>
+        <h1>{data.productName} </h1>
         <div className="productcard-right-star">
           <FaStar />
           <p>{product.rating} </p>
         </div>
         <div className="productcard-right-prices">
-          <div className="productcard-right-price-old">${product.price}</div>
+          <div className="productcard-right-price-old">${data.price}</div>
           <div className="productcard-right-price-new">
-            ${product.discountPercentage}
+            ${data.price}
           </div>
         </div>
         <div className="productcard-right-description">
-          {product.description}
+          {data.productDescription}
         </div>
         {item && isProductInCart ? (
           <button className="eachprod-quantity-container">

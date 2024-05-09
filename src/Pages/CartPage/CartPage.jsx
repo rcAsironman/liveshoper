@@ -97,7 +97,7 @@ const CartPage = () => {
       </div>
       <div className="cart-total">
         <div>
-        <h3>Total Cart Value : ${totalAmount}</h3>
+        <div>Total Cart Value : ${totalAmount}</div>
         </div>
         <Link to="/">
             <button className="card-btn">Add more items</button>

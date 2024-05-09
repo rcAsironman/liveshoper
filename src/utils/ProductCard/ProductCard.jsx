@@ -1,7 +1,7 @@
 import React from "react";
 import "./ProductCard.css";
 
-const ProductCard = ({ id, title, images, rating, price, discountedPrice }) => {
+const ProductCard = (data) => {
   return (
     <div className="card-wrapper">
       <div className="card-container">
@@ -9,10 +9,12 @@ const ProductCard = ({ id, title, images, rating, price, discountedPrice }) => {
           <img src="https://img.etimg.com/photo/msid-99147770,imgsize-41944/TwoMoustaches-BrassTraditionalUrliBowlDecorShowpiece.jpg" alt="fake" className="product-image" />
         </div>
         <div className="product-info">
-          <p className="product-details">House cermony utensil</p>
+          {
+            data['data'].productName.length < 25 ? (<p className="product-details">{data['data'].productName}</p>):
+            (<p className="product-details">{data['data'].productName.slice(0,22)+ "..."}</p>)
+          }
           <div className="prices">
-            <p className="product-original-price"> 800$</p>
-            <p className="product-discounted-price"> 600$</p>
+            <p className="product-discounted-price">{data['data'].price}</p>
           </div>
         </div>
         <button className="card-btn">Book Now</button>

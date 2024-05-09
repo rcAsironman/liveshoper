@@ -22,6 +22,75 @@ display: flex;
     justify-content: center;
     font-size: 14px;
 }
+.menu{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.toggle-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdown-menu {
+    position: relative;
+    top: 10;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+    cursor: pointer;
+
+  }
+  
+
+
+/* Custom scrollbar styles */
+.dropdown-menu::-webkit-scrollbar {
+    width: 4px; /* Customize scrollbar width */
+  }
+  
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: #000; /* Customize thumb color */
+    border-radius: 4px; /* Round the thumb corners */
+  }
+  .dropdown-menu li {
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: #f1f1f1;
+  }
+
+  .selectCatg{
+    background-color: darkslateblue;
+    color: white;
+    padding: 10px 20px;
+  }
+
+  .pro-box{
+    background-color: blue;
+    height: 200px;
+    position: fixed;
+
+  }
+
+  .loading-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 @media (max-width:600px) {
     .products-sub-heading-container h4{

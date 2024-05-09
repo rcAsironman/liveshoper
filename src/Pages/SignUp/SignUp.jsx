@@ -125,6 +125,7 @@ const SignUp = () => {
 
       })
       .catch((error) => {
+        alert(error)
         setIsLoadingActive(false);
         handleSignUpFailure(error);
         
@@ -209,7 +210,7 @@ const SignUp = () => {
             />
              {isPasswordMatched == false && <div className="error">password doesn't matched</div> }
           </div>
-          <button
+          <button className="signUp-btn"
             onClick={() => {
               if(formData.username === '' )
               {
