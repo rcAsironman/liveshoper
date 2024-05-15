@@ -1,32 +1,44 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import "../Slider/SliderComp.css";
 import SliderSettings from "../../utils/SliderSettings/SliderSettings"
 import Data from "../../utils/Data";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 
 
 
 
 function SliderComponentForShoper({ route, Component }) {
-  console.log(route);
+  
   const swiperRef = useRef(null);
-
+  const [shopperData, setShopperData] = useState([])
+  useEffect(()=>{
+    axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/employee/get-all-employees?page=0&size=15`)
+    .then((response)=>{
+      setShopperData(response.data.data['content'])
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  },[])
   return (
     <div className="slider-container">
       <Swiper loop={true} {...SliderSettings} ref={swiperRef} spaceBetween={10}>
         <div>
           <SliderButtons />
         </div>
-        {Data.slice(0, 8).map((item) => (
-          <SwiperSlide key={item.id}>
+        {shopperData.slice(0,8).map((item, index) => (
+          <SwiperSlide key={index} >
+            {console.log(item)}
             <Link  to={`${route}/${item.id}`}>
               <div
                 
                 className="slider-card-container"
               >
-                <Component />
+                <Component name={item['name']} location={item['address']}/>
               </div>
             </Link>
           </SwiperSlide>

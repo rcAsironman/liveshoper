@@ -1,7 +1,7 @@
 .cart-wrapper{
     height: auto;
     padding: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 200px;
 }
 .cart-back-btn{
     margin-top: 0px;
@@ -52,12 +52,21 @@
     position: relative;
 }
 
-.btn-container {
+.checkout-btn-container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
     gap: .2rem;
     position: fixed;
-    bottom: .5rem;
+    bottom: 20px;
     right: .5rem;
+    border-radius: 8px;
+    background-color: darkslateblue;
+    height: 40px;
+    width: 150px;
+
 }
 
 .cart-state {

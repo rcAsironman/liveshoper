@@ -2,7 +2,7 @@ import React from "react";
 import "./ProfileCard.css";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-const ProfileCard = ({ id, title, images, rating = 3.5 }) => {
+const ProfileCard = ({ id, name, images, location, rating = 3.5 }) => {
   // Calculate the number of full stars
   const fullStars = Math.floor(rating);
   // Check if there is a half star
@@ -25,8 +25,8 @@ const ProfileCard = ({ id, title, images, rating = 3.5 }) => {
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/220px-Outdoors-man-portrait_%28cropped%29.jpg" alt="fake" className="image" />
         </div>
         <div className="info">
-          <p className="info-details">Location : Hyderabad</p>
-          <p className="info-details">Experience : 4+</p>
+        <p className="info-details">Name: {name}</p>
+          <p className="info-details">Location : {location}</p>
           <p className="info-details">Languages : Telugu/English/English</p>
         </div>
         <button className="card-btn">Book Now</button>

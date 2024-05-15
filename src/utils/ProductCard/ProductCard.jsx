@@ -14,7 +14,7 @@ const ProductCard = (data) => {
             (<p className="product-details">{data['data'].productName.slice(0,22)+ "..."}</p>)
           }
           <div className="prices">
-            <p className="product-discounted-price">{data['data'].price}</p>
+            <p className="product-discounted-price" style={{color: 'green', fontWeight: '400'}}>₹{data['data'].price}</p>
           </div>
         </div>
         <button className="card-btn">Book Now</button>

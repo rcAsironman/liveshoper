@@ -7,45 +7,40 @@ import { addToCart,increaseQuantity,decreaseQuantity,removeFromCart } from "../.
 const ProductPageCard = ({data}) => {
 
   const cart = useSelector((state) => state.cart);
-  const item = cart.find((product) => product.id === 11);
- 
+  const item = cart.cartItems.find((product) => product.id === data.productId)
   const dispatch = useDispatch();
+  console.log("In product page ", cart.cartItems)
+  useEffect(()=>{
+    if(item)
+      {
+        
+        setIsProductInCart(true)
+      }
+      else{
+        setIsProductInCart(false)
+      }
+  },[])
   const [isProductInCart, setIsProductInCart] = useState(false);
-
+  const product = {
+    productName: "Sample Product",
+    rating: 4.5,
+    price: 50.99,
+    productDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    category: "Sample Category",
+    images: ["https://m.media-amazon.com/images/I/713LiwcYtxL.jpg"],
+  };
   const handleGoBack = () => {
     navigate(-1); // This will navigate back to the previous page
   };
 
-  useEffect(() => {
-    if (item) {
-      setIsProductInCart(true);
-    }
-  }, [item]);
 
 
-  const product = {
-    id: 11,
-    title: "perfume Oil",
-    description:
-      "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
-    price: 13,
-    discountPercentage: 8.4,
-    rating: 4.26,
-    stock: 65,
-    brand: "Impression of Acqua Di Gio",
-    category: "fragrances",
-    thumbnail: "https://cdn.dummyjson.com/product-images/11/thumbnail.jpg",
-    images: [
-      "https://cdn.dummyjson.com/product-images/11/1.jpg",
-      "https://cdn.dummyjson.com/product-images/11/2.jpg",
-      "https://cdn.dummyjson.com/product-images/11/3.jpg",
-      "https://cdn.dummyjson.com/product-images/11/thumbnail.jpg",
-    ],
-  };
+ 
   
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(product));
+  const addToCartHandler = (id, name, price, imageKey, description) => {
+
+    dispatch(addToCart({id, name, price, imageKey, description}));
     setIsProductInCart(true); // Update state when adding to cart
   };
   
@@ -68,28 +63,33 @@ const ProductPageCard = ({data}) => {
           <p>{product.rating} </p>
         </div>
         <div className="productcard-right-prices">
-          <div className="productcard-right-price-old">${data.price}</div>
+          <div className="productcard-right-price-old">₹{data.price}</div>
           <div className="productcard-right-price-new">
-            ${data.price}
+          ₹{data.price}
           </div>
         </div>
         <div className="productcard-right-description">
           {data.productDescription}
         </div>
-        {item && isProductInCart ? (
+        { (isProductInCart && item !== undefined)  ? (
           <button className="eachprod-quantity-container">
             <p
               onClick={() => {
-                dispatch(decreaseQuantity(item?.id));
+                
+                
+                dispatch(decreaseQuantity(item.id));
+                  
               }}
               className="quantity-btn"
             >
               -
             </p>
-            <p className="quantity">{item?.quantity}</p>
+            <p className="quantity">{item != undefined? item.quantity : 0}</p>
             <p
               onClick={() => {
-                dispatch(increaseQuantity(item?.id));
+             
+                dispatch(increaseQuantity(item.id));
+                 
               }}
               className="quantity-btn"
             >
@@ -97,7 +97,8 @@ const ProductPageCard = ({data}) => {
             </p>
           </button>
         ) : (
-          <button onClick={addToCartHandler}>ADD TO CART</button>
+          
+       <button onClick={()=> addToCartHandler(data.productId, data.productName, data.price, data.productImageKey, data.productDescription)}>ADD TO CART</button>
         )}
         <p className="productcard-right-category">
           <span>Category :</span>

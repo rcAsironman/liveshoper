@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Footer.css";
+import axios from "axios";
 
 const Footer = () => {
+
+  const [contact, setContact] = useState([])
+  useEffect(()=>{
+    axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/contact-us/find-all?page=0&size=10`)
+    .then((response)=>{
+      console.log(response.data.data['content'])
+      setContact(response.data.data['content'])
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  },[])
   return (
     <div className="outer-wrapper">
       <div className="wrapper">

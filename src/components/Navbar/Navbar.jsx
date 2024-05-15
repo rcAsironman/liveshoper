@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { CgMenu } from "react-icons/cg";
 import { useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { CgSearch } from "react-icons/cg";
 import { CgClose } from "react-icons/cg";
 import { FaCartPlus } from "react-icons/fa";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
 import { toggleState } from "../../Slices/AuthSlice";
 import Cookies from "js-cookie";
 
@@ -20,7 +20,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [activeLink, setactiveLink] = useState("home");
   console.log(isAuthenticated);
-  let cartCount = useSelector((state) => state.cart.length);
+  let cartCount = useSelector((state) => state.cart.cartItems.length);
   console.log(cartCount);
 
 
@@ -39,13 +39,13 @@ const Navbar = () => {
     setisSearchOpen((prev) => !prev);
   };
 
-const logout = () => {
-  if (isAuthenticated) {
-    dispatch(toggleState(false)); // Set isAuthenticated to false
-  }
-  Cookies.remove('token')
-  navigate("/login"); // Navigate to the login route
-};
+  const logout = () => {
+    if (isAuthenticated) {
+      dispatch(toggleState(false)); // Set isAuthenticated to false
+    }
+    Cookies.remove('token')
+    navigate("/login"); // Navigate to the login route
+  };
 
 
   return (
@@ -62,7 +62,7 @@ const logout = () => {
                   <li>
                     <SearchBar />
                   </li>
-                  
+
                   <li className="nav-link">
                     <Link
                       onClick={() => setactiveLink("home")}
@@ -82,10 +82,12 @@ const logout = () => {
                     >
                       <div className="cart-link">
                         <span className="cart"> Cart</span>
-                        <span className="cart-icon">
-                          <span className="cart-count">{cartCount}</span>
-                          <FaCartPlus fontSize={20} />
-                        </span>
+                        {
+                          cartCount > 0 && (<span className="cart-icon">
+                            <span className="cart-count">{cartCount}</span>
+                            <FaCartPlus fontSize={20} />
+                          </span>)
+                        }
                       </div>
                     </Link>
                   </li>
@@ -135,12 +137,11 @@ const logout = () => {
                 <Link
                   className={`${activeLink === "login" ? "active" : ""}`}
                   onClick={() => {
-                    if(isAuthenticated)
-                    {
+                    if (isAuthenticated) {
                       setactiveLink("login")
                     }
-                    else{
-                    setactiveLink("home");
+                    else {
+                      setactiveLink("home");
                     }
                     logout();
                   }}
@@ -150,7 +151,7 @@ const logout = () => {
                   {isAuthenticated ? "Logout" : "Login"}
                 </Link>
               </li>
-              
+
             </ul>
           </div>
           <div className="mobile-nav">
@@ -167,17 +168,16 @@ const logout = () => {
               </li>
             )}
             {isAuthenticated && isSearchOpen ? (
-              <CgClose onClick={toggleSearch} />
+              <CgClose onClick={toggleSearch}  fontSize={30}/>
             ) : (
               isAuthenticated && (
                 <CgSearch
-                  fontWeight={900}
-                  fontSize={20}
+                  fontSize={35}
                   onClick={toggleSearch}
                 />
               )
             )}
-            <CgMenu fontSize={20} onClick={toggleMenu} />
+            {!openMenu? (<CgMenu fontSize={35} onClick={toggleMenu} />) : (<CgClose fontSize={30} onClick={toggleMenu}></CgClose>)}
           </div>
 
           {openMenu && (
@@ -222,12 +222,12 @@ const logout = () => {
                     {isAuthenticated ? "Logout" : "Login"}
                   </Link>
                 </li>
-                
+
               </ul>
             </div>
           )}
         </div>
-        {}
+        { }
         {isSearchOpen && (
           <div className="mobile-searchbar">
             <SearchBar />

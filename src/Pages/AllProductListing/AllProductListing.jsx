@@ -18,7 +18,7 @@ const AllProductListing = () => {
       <div className="products-container">
         {Data.map((item) => (
           <Link onClick={window.scrollTo(0,0)} key={item.id} to={`/products/${item.id}`}>
-            <ProductCard  />
+            <ProductCard  data={item}/>
           </Link>
         ))}
       </div>

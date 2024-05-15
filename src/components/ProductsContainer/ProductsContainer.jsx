@@ -153,6 +153,7 @@ const ProductsContainer = () => {
                           <Link
                             className="link"
                             to="/popular"
+                            
                           >
                             <p className="view-more">
                               View More <img src="arrow-right.svg" alt="product image" />

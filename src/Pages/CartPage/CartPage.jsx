@@ -10,19 +10,19 @@ import { Link } from "react-router-dom";
 import { useState, } from "react";
 import Lottie from "lottie-react";
 import loading from "../../lottie/loading.json"
-import { FaArrowLeft} from 'react-icons/fa'
+import { FaArrowLeft } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 const CartPage = () => {
 
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
-  const cart = useSelector((state) => state.cart);
-
+  const cart = useSelector((state) => state.cart.cartItems);
+  console.log("in cart page", cart)
   const navigation = useNavigate()
   const handleBack = () => {
     navigation(-1);
   }
 
- 
+
 
   console.log(cart);
   const handleCheckout = () => {
@@ -32,26 +32,29 @@ const CartPage = () => {
   const totalAmount = cart.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0);
 
   return cart.length == 0 ? (
-   <div>
-      <div className="back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
-     <div className="cart-state ">
-      Cart is empty
+    <div>
+      <div className="back-btn" onClick={() => handleBack()}><FaArrowLeft /></div>
+      <div className="cart-state ">
+        Cart is empty
+      </div>
     </div>
-   </div>
   ) : (
     <div className="cart-wrapper">
+
       <div className="cart-container ">
-      <div className="cart-back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
+        <div style={{display: "flex",}}><div className="cart-back-btn" onClick={() => handleBack()}><FaArrowLeft /></div>
+        <div style={{fontSize: "x-large", fontWeight: "600", position: "relative", left: "100px"}}>Cart</div>
+        </div>
         {cart.map((eachProd) => (
           <div className="prod" key={eachProd.id}>
             <div className="cart-card">
               <div className="card-left">
                 <div className="prod-image">
-                  <img src={eachProd?.images[0]} alt="ad" className="cart-img" />
+                  <img src={eachProd?.imageKey} alt="ad" className="cart-img" />
                 </div>
                 <div className="card-detail">
-                  <h4 >{eachProd.title} </h4>
-                  <p >Price :{eachProd?.price}$</p>
+                  <h4 >{eachProd.name} </h4>
+                  <p >Price : ₹{eachProd?.price}</p>
                   <div className="quantity-container">
                     <button
                       onClick={() => {
@@ -84,25 +87,27 @@ const CartPage = () => {
             </div>
           </div>
         ))}
-        <div className="btn-container" onClick={()=>{handleCheckout()}}>
-         {
-           !isCheckoutSuccess? (<>Checkout</>) 
-           : 
-           (<div>
-            <Lottie animationData={loading}></Lottie>
-           </div>)
-         } 
-         
-        </div>
-      </div>
-      <div className="cart-total">
-        <div>
-        <div>Total Cart Value : ${totalAmount}</div>
-        </div>
-        <Link to="/">
+        <div className="cart-total">
+          <Link to="/">
             <button className="card-btn">Add more items</button>
           </Link>
+          <div>
+            <div>Total Cart Value : ₹{totalAmount}</div>
+          </div>
+
+        </div>
+        <div className="checkout-btn-container" onClick={() => { handleCheckout() }}>
+          {
+            !isCheckoutSuccess ? (<>Checkout</>)
+              :
+              (<div>
+                <Lottie animationData={loading}></Lottie>
+              </div>)
+          }
+
+        </div>
       </div>
+
     </div>
   );
 };
