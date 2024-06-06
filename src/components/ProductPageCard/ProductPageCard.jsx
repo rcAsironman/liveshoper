@@ -1,111 +1,189 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductPageCard.css";
-import { FaStar } from "react-icons/fa";
+import { FaArrowLeft, FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart,increaseQuantity,decreaseQuantity,removeFromCart } from "../../Slices/CartSlice";
+import fetchImageUrl from "../../fetchImageUrl";
+import Lottie from "lottie-react";
+import loading1 from "../../lottie/loading2.json"
+import { useNavigate } from "react-router-dom";
+import { updateCart } from "../../Slices/CartSlice";
+import { TiMinus } from "react-icons/ti";
+import { TiPlus } from "react-icons/ti";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import WishList from "../wishlist/WishList";
 
-const ProductPageCard = ({data}) => {
 
-  const cart = useSelector((state) => state.cart);
-  const item = cart.cartItems.find((product) => product.id === data.productId)
+const ProductPageCard = ({ data, img }) => {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("In product page ", cart.cartItems)
-  useEffect(()=>{
-    if(item)
-      {
-        
-        setIsProductInCart(true)
-      }
-      else{
-        setIsProductInCart(false)
-      }
-  },[])
   const [isProductInCart, setIsProductInCart] = useState(false);
-  const product = {
-    productName: "Sample Product",
-    rating: 4.5,
-    price: 50.99,
-    productDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    category: "Sample Category",
-    images: ["https://m.media-amazon.com/images/I/713LiwcYtxL.jpg"],
-  };
-  const handleGoBack = () => {
-    navigate(-1); // This will navigate back to the previous page
-  };
+  const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+  const [item, setItem] = useState()
 
 
+  useEffect(() => {
 
- 
-  
+    const storedData = JSON.parse(localStorage.getItem("cart")) || [];
+    dispatch(updateCart(storedData));
+    const item = storedData.find((item) => item.id == data.productId)
+
+    if (item) {
+      setItem(item)
+      setIsProductInCart(true)
+    }
+    else {
+
+      setIsProductInCart(false)
+    }
+  }, [])
+
+
+  // localStorage.removeItem("cart")
+
+  const handleSaveLocalCart = (updatedData) => {
+    localStorage.setItem("cart", JSON.stringify(updatedData))
+
+  }
+
+
 
   const addToCartHandler = (id, name, price, imageKey, description) => {
 
-    dispatch(addToCart({id, name, price, imageKey, description}));
-    setIsProductInCart(true); // Update state when adding to cart
+    console.log("in add to cart method ", item)
+    const storedData = JSON.parse(localStorage.getItem("cart")) || [];
+    const newItem = { id, name, price, imageKey, description, quantity: 1 };
+    const updatedCart = [...storedData, newItem];
+    handleSaveLocalCart(updatedCart);
+    dispatch(updateCart(updatedCart));
+    setItem(newItem)
+    setIsProductInCart(true)
+
+
+
   };
-  
+
+
 
   return (
     <div className="productcard">
+      <div className="wishlist-Each-product"><WishList data={data} size={30}/></div>
       <div className="productcard-left">
         <div className="productcard-img">
-          <img
-            className="productcard-main-img"
-            src={product.images[0]}
-            alt="s"
-          />
+          {
+            img.length > 0 ? (<img
+              className="productcard-main-img"
+              src={img}
+              alt="product image"
+            />) : (<>
+              <Lottie animationData={loading1} alt="loading..." className="loading-lottie" />
+            </>)
+          }
+        </div>
+        <div className="pictures">
+          <div  className="product-img">
+            <img  
+              src={img}
+              alt="product image"
+            /></div>
+            <div  className="product-img">
+            <img  
+              src={img}
+              alt="product image"
+            /></div>
+            <div  className="product-img">
+            <img  
+              src={img}
+              alt="product image"
+            /></div>
         </div>
       </div>
       <div className="productcard-right">
-        <h1>{data.productName} </h1>
+        <h1>{data.productName}</h1>
         <div className="productcard-right-star">
           <FaStar />
-          <p>{product.rating} </p>
+          <p>{3} </p>
         </div>
         <div className="productcard-right-prices">
           <div className="productcard-right-price-old">₹{data.price}</div>
           <div className="productcard-right-price-new">
-          ₹{data.price}
+            ₹{data.price}
           </div>
         </div>
         <div className="productcard-right-description">
           {data.productDescription}
         </div>
-        { (isProductInCart && item !== undefined)  ? (
+        {(isProductInCart && item !== undefined) ? (
           <button className="eachprod-quantity-container">
             <p
               onClick={() => {
-                
-                
-                dispatch(decreaseQuantity(item.id));
-                  
+
+                const storedData = JSON.parse(localStorage.getItem("cart")) || [];
+                const fetchedItem = storedData.find((pre) => pre.id == item.id)
+                if (fetchedItem) {
+                  const updatedData = storedData.map((pre) => {
+                    if (pre.id == fetchedItem.id) {
+
+                      return { ...pre, quantity: fetchedItem.quantity - 1 }
+                    }
+                    return pre
+                  }).filter((data) => {
+                    if (data.quantity != 0) {
+                      return data
+                    }
+                  })
+
+                  handleSaveLocalCart(updatedData)
+                  dispatch(updateCart(updatedData))
+                  const itemToSet = updatedData.find((data) => data.id == fetchedItem.id)
+                  setItem(itemToSet)
+                }
+                else {
+                  setItem(fetchedItem)
+                }
+
+
               }}
               className="quantity-btn"
             >
-              -
+              <TiMinus size={11} />
             </p>
-            <p className="quantity">{item != undefined? item.quantity : 0}</p>
+            <p className="quantity">{item != undefined ? item.quantity : 0}</p>
             <p
               onClick={() => {
-             
-                dispatch(increaseQuantity(item.id));
-                 
+
+                const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+                const fetchedItem = storedCart.find((pre) => pre.id == item.id)
+                if(fetchedItem)
+                  {
+                    const updatedCart = storedCart.map(data =>
+                      data.id === item.id ? { ...data, quantity: data.quantity + 1 } : data
+                    );
+                    handleSaveLocalCart(updatedCart)
+                    dispatch(updateCart(updatedCart));
+                    const itemToSet = updatedCart.find((data) => data.id == fetchedItem.id)
+                    setItem(itemToSet)
+                  }
+                  else{
+                    setItem(fetchedItem)
+                  }
+
               }}
               className="quantity-btn"
             >
-              +
+              <TiPlus size={11} />
             </p>
           </button>
         ) : (
-          
-       <button onClick={()=> addToCartHandler(data.productId, data.productName, data.price, data.productImageKey, data.productDescription)}>ADD TO CART</button>
+
+          <button onClick={() => addToCartHandler(data.productId, data.productName, data.price, img, data.productDescription)}>ADD TO CART</button>
         )}
         <p className="productcard-right-category">
-          <span>Category :</span>
-          {product.category}
+          <span>Category : </span>
+          {data.tags}
         </p>
         <p className="productcard-right-category">
-          <span>Tags :</span>Modern, Latest, crop Top
+          <span>Tags : </span>Modern, Latest, crop Top
         </p>
       </div>
     </div>

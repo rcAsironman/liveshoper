@@ -1,14 +1,15 @@
 .loginsignup {
     width: 100%;
-    height: auto;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 100px;
 }
 
 .loginsignup-container {
     height: auto;
+    position: relative;
+    top: -100px;
     padding: 20px 60px;
     border-radius: 10px;
 }
@@ -76,6 +77,34 @@
     height: 80px;
     margin-top: -15px;
 }
+
+.bg1{
+    position: absolute;
+    left: 10px;
+    top: 100px
+}
+.bg2{
+    position: absolute;
+    left: 950px;
+    top: 380px
+}
+
+.login-btn{
+  background-color: rgb(80, 80, 227);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  position: relative;
+  top: 20px;
+  cursor: pointer;
+}
+
+.login-links{
+    display: flex;
+    gap: 20px;
+}
 @media (max-width:1280px) {
    
 
@@ -102,8 +131,14 @@
 
 }
 
+
+
 @media (max-width:800px) {
 
+    .login-form{
+
+        height: auto;
+    }
   
     .loginsignup-container {
         height: auto;
@@ -123,10 +158,22 @@
 
         font-size: 1rem;
     }
+    .login-links{
+        display: block;
+        margin: 0 auto;
+        margin-left: 20px;
+        margin-top: 10px;
+        line-height: 40px;
+    }
+
 }
 
 @media (max-width:600px) {
 
+    .login-form{
+        position: absolute;
+        top: 150px;
+    }
     .loginsignup-container {
         height: 500px;
         margin-top: 100px;
@@ -164,6 +211,13 @@
         height: 42px;
         width: 90%;
         margin-left: 1rem;
+    }
+
+    .bg1{
+        display: none;
+    }
+    .bg2{
+       display: none;
     }
 
 }

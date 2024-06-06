@@ -8,10 +8,7 @@ import ProductsContainer from '../../components/ProductsContainer/ProductsContai
 const HomePage = () => {
 
 
-  
-
-  
-
+    
   const handleClick = () => {
     const element = document.getElementById("shopperContainer"); // Replace "elementId" with the ID of the element you want to scroll to
     if (element) {

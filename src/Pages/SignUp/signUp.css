@@ -119,13 +119,24 @@
 
         font-size: 1rem;
     }
+    .signup-container{
+        position: relative;
+        top: 0px;
+    }
+
+    .signup{
+        height: auto;
+    }
 }
 
 @media (max-width:600px) {
 
+    .signup{
+        height: auto;
+    }
     .signup-container {
         height: 500px;
-        margin-top: -200px;
+        margin-top: 0px;
         
     }
 

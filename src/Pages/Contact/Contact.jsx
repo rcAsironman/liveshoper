@@ -14,8 +14,16 @@ const Contact = () => {
 
   return (
     <div className="contact">
-      <div className="back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
+      <div className='wishlist-name'>
+        <div className="back-btn" onClick={handleBack}>
+          <FaArrowLeft />
+        </div>
+        <div className='heading'>Contact</div>
+        </div>
+      <div>
       <h1 className="contact-info">Hello there, we are here to serve you. Feel free to contact us.</h1>
+
+      </div>
       <div className="contact-container">
 
         <div className="contact-div">

@@ -1,6 +1,8 @@
 .descriptionbox {
     margin: 100px 170px;
     max-width: 1400px;
+    position: relative;
+    top: -200px
 }
 
 .descriptionbox-navigator {
@@ -42,9 +44,21 @@
 @media (max-width:800px) {
     .descriptionbox {
         margin: 60px 20px;
+        position: relative;
+        top: -350px
     }
 
     .descriptionbox-description {
         font-size: .8rem;
     }
+}
+
+@media (max-width:600px)
+{
+    .descriptionbox {
+        margin: 60px 20px;
+        position: relative;
+        top: 50px
+    }
+
 }

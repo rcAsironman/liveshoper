@@ -1,7 +1,8 @@
 import React from "react";
 import "./ProfileCard.css";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
-
+import live from "../../lottie/live.json"
+import Lottie from "lottie-react";
 const ProfileCard = ({ id, name, images, location, rating = 3.5 }) => {
   // Calculate the number of full stars
   const fullStars = Math.floor(rating);
@@ -9,17 +10,19 @@ const ProfileCard = ({ id, name, images, location, rating = 3.5 }) => {
   const hasHalfStar = rating % 1 !== 0;
   // Calculate the number of empty stars
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
   return (
-    <div className="card-wrapper">
-      <div className="profile-container">
+    <div className="card-wrapper" key={id}>
+      <div className="profile-container" >
         <div className="card-rating">
-          {/* Display full stars */}
-          {Array(fullStars).fill(<FaStar fontSize={10} color="gold" />)}
+        <Lottie animationData={live}  className="live-lottie"/>
+         <div>
+           {/* Display full stars */}
+           {Array(fullStars).fill(<FaStar fontSize={10} color="gold" />)}
           {/* Display half star if applicable */}
           {hasHalfStar && <FaStarHalfAlt fontSize={10} color="gold" />}
           {/* Display empty stars */}
           {Array(emptyStars).fill(<FaRegStar fontSize={10} color="gold" />)}
+         </div>
         </div>
         <div className="image-container">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/220px-Outdoors-man-portrait_%28cropped%29.jpg" alt="fake" className="image" />
@@ -29,7 +32,7 @@ const ProfileCard = ({ id, name, images, location, rating = 3.5 }) => {
           <p className="info-details">Location : {location}</p>
           <p className="info-details">Languages : Telugu/English/English</p>
         </div>
-        <button className="card-btn">Book Now</button>
+        {/* <button className="card-btn">ADD TO CART</button> */}
       </div>
     </div>
   );

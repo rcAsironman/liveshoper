@@ -6,7 +6,7 @@
        slidesPerView: 2,
      },
      600: {
-       slidesPerView: 2,
+       slidesPerView: 3,
      },
      750: {
        slidesPerView: 3,

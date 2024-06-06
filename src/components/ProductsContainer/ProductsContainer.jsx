@@ -5,200 +5,179 @@ import { Link } from "react-router-dom";
 import ProductCard from "../../utils/ProductCard/ProductCard";
 import axios from "axios";
 import Lottie from "lottie-react";
-import loadingBox from "../../lottie/loadingBox.json"
+import loadingBox from "../../lottie/loadingBox.json";
 import { useDispatch, useSelector } from "react-redux";
-import { storeData } from "../../Slices/InitialDataFetchSlice";
-import { clearData } from "../../Slices/InitialDataFetchSlice";
-import { storeCatg } from "../../Slices/InitialDataFetchSlice";
-import { clearCatg } from "../../Slices/InitialDataFetchSlice";
+import { storeData, clearData, storeCatg, clearCatg } from "../../Slices/InitialDataFetchSlice";
+import { ipAddress } from "../../config";
 
 const ProductsContainer = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [catg, setCatg] = useState([]);
-  const [subCatg, setSubCatg] = useState(null);
-  const [keys, setKeys] = useState([]);
+  const [subCatg, setSubCatg] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-
-  const initialDataFromApi = useSelector((state) => state.initialDataFromApi.data)
-  const [initialData, setInitialData] = useState(initialDataFromApi)
-
-  const catgRedux = useSelector((state) => state.initialDataFromApi.catg)
-  const [selectedOption, setSelectedOption] = useState(catgRedux)
-
-  useEffect(() => {
-
-    if (!initialData) {
-      console.log("in in side useEffect if block")
-      handleCategoery()
-      handleSubCatg(2, "snacks")
-    }
-    else{
-      console.log("in in side useEffect else block") 
-      setSubCatg(initialData)
-    }
-
-  }, [])
+  const initialDataFromApi = useSelector((state) => state.initialDataFromApi.data);
+  const catgRedux = useSelector((state) => state.initialDataFromApi.catg);
+  const [selectedOption, setSelectedOption] = useState(catgRedux);
+  const [categoreyFromApi, setCategoeryFromApi] = useState([]);
 
 
-
-
- const fetchReduxData = () => {
-  const dataReduxSet = useSelector((state) => state.initialDataFromApi.sate)
-  setInitialData(dataReduxSet)
- }
-  const toggleMenu = (event) => {
-    event.preventDefault(); // Prevent default behavior
-
-    setIsOpen(!isOpen);
-    if (isOpen !== true && catg.length === 0) {
-      handleCategoery()
-    }
-  };
-
-  const handleCategoery = async () => {
-
-
-
-    axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/sub-category/find-all-sub-categories?page=0&size=100`)
-      .then((response) => {
-        setCatg(response.data.data.content)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-
-
-  const handleSubCatg = async (catgId, name) => {
-
-    dispatch(clearCatg())
-    dispatch(storeCatg(name))
-    setIsLoading(true)
-    setIsOpen(false);
-    setSubCatg(null);
-    setSelectedOption(name)
-    setKeys([])
+  // Fetch all categories like Top-rated, hand-picked 
+  const fetchCategories = async () => {
     try {
-      const updatedData = [];
-      for (let i = 1; i < 6; i++) {
-        const response = await axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/product/find-by-category-and-sub-category?categoryId=${i}&subCategoryId=${catgId}&page=0&size=15`);
-        const initialCatg = {};
-        initialCatg[`${response.data.data.content[0][0].CatName}`] = response.data.data.content[0][0].products;
-        updatedData.push(initialCatg);
-      }
-       setSubCatg(updatedData);
-       dispatch(clearData())
-       setInitialData(null)
-       dispatch(storeData(updatedData))
-       
+      const response = await axios.get(`http://${ipAddress}/liveshoper/api/v1/category/find-all-categories?page=0&size=10`);
+      const categoeryData = response.data.data.content.map(item => ({
+        categoryId: item.categoryId,
+        categoryName: item.categoryName
+      }));
+      setCategoeryFromApi(categoeryData);
     } catch (error) {
       console.log(error);
     }
-
   };
 
-  useEffect(() => {
-    if (subCatg !== null) {
+  // Fetch all sub-categories like snacks, clothing, Decoration
+  const fetchSubCategories = async () => {
 
-      const key = []
-
-      for (let i = 0; i < subCatg.length; i++) {
-        const eachKey = Object.keys(subCatg[i])
-        key.push(eachKey[0])
-      }
-      // Execute further actions after data is fetched and assigned
-      setKeys(key)
-      setIsLoading(false)
+    console.log("fetch subcatg is called")
+    try {
+      const response = await axios.get(`http://${ipAddress}/liveshoper/api/v1/sub-category/find-all-sub-categories?page=0&size=100`);
+      setCatg(response.data.data.content);
+      return response.data.data.content
+    } catch (error) {
+      console.log(error);
     }
-  }, [subCatg]);
+  };
+
+  // Fetch products by category and sub-category
+  const fetchProducts = async (subCatgId, name) => {
+    setIsLoading(true);
+    setIsOpen(false);
+    setSubCatg([]);
+    setSelectedOption(name);
+
+    try {
+      const requests = categoreyFromApi.map(async (item) => {
+        try {
+          const response = await axios.get(`http://${ipAddress}/liveshoper/api/v1/product/find-by-category-and-sub-category?categoryId=${item.categoryId}&subCategoryId=${subCatgId}&page=0&size=12`);
+          return {
+            categoryId: item.categoryId,
+            categoryName: item.categoryName,
+            content: response.data.data.content
+          };
+        } catch (error) {
+          console.log(error);
+          return { categoryName: item.categoryName, content: [] };
+        }
+      });
+
+      const responses = await Promise.all(requests);
+      const updatedData = responses.map(data => ({
+        categoryId: data.categoryId,
+        categoryName: data.categoryName,
+        content: data.content
+      }));
+
+      setSubCatg(updatedData);
+      dispatch(clearData());
+      dispatch(storeData(updatedData));
+      dispatch(storeCatg(name))
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
 
+ 
 
+  // Initial data fetch or use Redux store data
+  useEffect(() => {
+    if (!initialDataFromApi || initialDataFromApi.length === 0) {
+      //calling this function to fetch Top-rated, Hand Picked e.t.c
+      fetchCategories().then(() => {
+
+        //This method is for fetching snacks, Clothing e.t.c
+        fetchSubCategories().then((response) => {
+
+          fetchProducts(response[0].subCategoryId, response[0].subCategoryName);
+        });
+
+      });
+    } else {
+      setSubCatg(initialDataFromApi);
+    }
+  }, [initialDataFromApi, dispatch,]);
+
+  const toggleMenu = (event) => {
+    event.preventDefault();
+    setIsOpen(!isOpen);
+    if (!isOpen && catg.length === 0) {
+      fetchSubCategories();
+    }
+  };
 
   return (
     <div className="wrapper">
-
-      <div className="pro-box">
-
-      </div>
+      <div className="pro-box"></div>
       <div className="productscontainer-top">
         <h3>Products Available</h3>
         <div className="menu">
-          <div onClick={(event) => toggleMenu(event)} className="selectCatg">{isOpen == true ? "close" : catgRedux}</div>
-
+          <div onClick={toggleMenu} className="selectCatg">
+            {isOpen ? "close" : selectedOption}
+          </div>
         </div>
       </div>
 
-
-
-      {
-        isOpen == false ? (
-          <div className="slider-container">
-
-
-            {
-              isLoading ? (<div className="loading-box">
-                <Lottie animationData={loadingBox} style={{ width: "200px", height: "200px" }} />
-              </div>) : (<>
-                {
-                  keys.map((data, index) => {
-                    return (
-
-                      <div key={index}>
-                        <div className="products-sub-heading-container">
-                          <h4>{data}</h4>
-                          <Link
-                            className="link"
-                            to="/popular"
-                            
-                          >
-                            <p className="view-more">
-                              View More <img src="arrow-right.svg" alt="product image" />
-                            </p>
-                          </Link>
-                        </div>
-                        <SliderComp Component={ProductCard} productData={subCatg[index][data]} />
-                      </div>
-                    );
-                  })
-                }
-              </>)
-            }
+      {isOpen ? (
+        <div className="toggle-menu">
+          <div className="dropdown-menu">
+            <ul>
+              {catg.map((data) => (
+                <li key={data.subCategoryId} onClick={() => fetchProducts(data.subCategoryId, data.subCategoryName)}>
+                  {data.subCategoryName}
+                </li>
+              ))}
+            </ul>
           </div>
-        ) :
-
-          (
-            <div className="toggle-menu">
-              {
-                isOpen && (
-
-                  <div className="dropdown-menu">
-
-                    <ul>
-                      {
-                        catg.map((data, key) => {
-                          return (
-                            <>
-                              <li key={key} onClick={() => handleSubCatg(data.subCategoryId, data.subCategoryName)}>{data.subCategoryName}</li>
-                            </>
-
-
-                          )
-                        })
-                      }
-                    </ul>
-
-                  </div>
-                )
-              }
+        </div>
+      ) : (
+        <div className="slider-container">
+          {isLoading ? (
+            <div className="loading-box">
+              <Lottie animationData={loadingBox} style={{ width: "200px", height: "200px" }} />
             </div>
-          )
-      }
+          ) : (
+            subCatg.map((data, index) => (
+              data.content.length > 0 && (
 
+                <div key={index}>
+                  <div className="products-sub-heading-container">
+                    <h4>{data.categoryName}</h4>
+                    <Link className="link"
 
+                      to="/popular"
+                      state={{
+                        categoryData: data,
+                        page: 0,
+                        category: selectedOption,
+                        catgId: data.content.length > 0 ? data.content[0].subCategoryId : 0
+
+                        //data.content[0].subCategoryId.subCategoryId
+                      }}>
+                      <div className="view-more">
+                        View More <img src="arrow-right.svg" alt="product image" className="right-arrow"/>
+                      </div>
+                    </Link>
+                  </div>
+                  <SliderComp Component={ProductCard} productData={data.content} />
+                </div>
+              )
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };

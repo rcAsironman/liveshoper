@@ -5,6 +5,7 @@
     margin-bottom: 1.5rem;
 }
 
+
 .products-sub-heading-container{
 display: flex;
     justify-content: space-between;
@@ -22,6 +23,12 @@ display: flex;
     justify-content: center;
     font-size: 14px;
 }
+.view-more .right-arrow{
+  position: relative;
+  top: 6px;
+}
+
+
 .menu{
     position: relative;
     display: inline-block;
@@ -95,5 +102,13 @@ display: flex;
 @media (max-width:600px) {
     .products-sub-heading-container h4{
         font-size: .8rem;
+        
+    }
+    .view-more{
+
+    }
+    .view-more .right-arrow{
+      position: relative;
+      top: 5px;
     }
 }

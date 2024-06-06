@@ -13,6 +13,7 @@
     text-decoration: none;
     padding: .6rem 1rem;
     border-radius: 80px;
+    font-size: small;
 }
 
 .navbar {
@@ -71,20 +72,24 @@
 
 .cart-icon{
     position: relative;
+    left: 10px;
+    top: 3px
 }
 .cart-count{
     display: flex;
     justify-content: center;
+    align-items: center;
     position: absolute;
     top: -.6rem;
-    left: .8rem;
-    width: 16px;
-    height: 16px;
+    left: 1.5rem;
+    width: 18px;
+    height: 18px;
+    padding: 5px;
     border-radius: 50%;
-    background: whitesmoke;
-    color: black;
-    font-size: .7rem;
-    
+    background: red;
+    color: white;
+    font-size: .8rem;
+    font-weight: 600;
 }
 
 body.no-scroll {
@@ -116,6 +121,7 @@ body.no-scroll {
     #link {
         font-weight: 600;
         color: black;
+        font-size: large;
     }
 
     .mobile-nav {

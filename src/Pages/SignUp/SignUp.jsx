@@ -12,7 +12,9 @@ import Lottie from "lottie-react";
 import loading2 from "../../lottie/loading2.json"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import bg1 from "../../background-image/woman1.png"
+import bg2 from "../../background-image/woman1.png"
+import { ipAddress } from "../../config";
 const SignUp = () => {
 
 
@@ -93,7 +95,7 @@ const SignUp = () => {
 
 
     setIsLoadingActive(true)
-    axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
+    axios.post(`http://${ipAddress}/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
       .then((response) => {
         console.log(response.data)
         const token = response.data.data['token']
@@ -144,8 +146,12 @@ const SignUp = () => {
   return (
     <div>
       <div className="signup">
-
+      {/* <div>
+            <img src={bg1} width={60}/>
+      </div> */}
+     
         <div className="signup-container">
+          
           <div className="loginsignup-fields">
 
             <div className="login-heading" style={{ fontSize: 'xx-large', fontWeight: '500' }}>SignUp</div>
@@ -255,6 +261,9 @@ const SignUp = () => {
 
           
         </div>
+        {/* <div>
+            <img src={bg1} width={60}/>
+      </div> */}
         <ToastContainer />
       </div>
       

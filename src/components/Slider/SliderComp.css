@@ -1,28 +1,35 @@
-
 .slider-card-container {
-    margin: 0 0 0 1rem;
-    outline: none;
-    border: none;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.slider-container {
-
-    position: relative;
-}
-
-.swiper{
+/* .shoper-slider-container{
+  
     width: 100%;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
+
+.shoper-slider-container .shoper-slider-card-container{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+} */
+
 
 .swiper-btns{
 
   display: flex;
-    justify-content: space-between;
-   
+  justify-content: space-between;
+  background-color: blue;
 }
+
 .swiper-button-prev{
-    position: absolute;
     transform: rotate(180deg);
     color: black;
         width: 20px;
@@ -37,10 +44,10 @@
         position: absolute;
        top: 9rem;
        left: 0;
-        z-index: 1000;
+       z-index: 1000;
 }
+
 .swiper-button-next{
-    position: absolute;
     color: black;
         width: 20px;
         display: flex;
@@ -57,39 +64,34 @@
         z-index: 1000;
 }
 
-.swiper-wrapper{
-    
-}
+
 @media (max-width:768px) {
-    .swiper-wrapper{
-        margin-left: .8rem;
-    }
-    .swiper-button-next,.swiper-button-prev{
-        top: 6rem;
-    }
-
-}
-
-@media (max-width:480px) {
-
-    .slider-card-container {
-        margin: 0 0 0 1.2rem
-    }
-
-    .swiper-wrapper{
-        margin-left: 0;
-    }
-   
-
     
-}
-
-@media (max-width:390px) {
-    .slider-card-container{
-        margin: 0 0 0 0.5rem
-    }
-    .swiper-slide{
+   
+    .slider-card-container {
         display: flex;
         justify-content: center;
+        align-items: center;
     }
+    .swiper-button-next,.swiper-button-prev{
+        display: none;
+    }
+    .shoper-slider-container{
+        width: 100%;
+    
+    
+    }
+    
+    /* .shoper-slider-card-container{
+    
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     position: relative;
+     left: 10px;
+    } */
+
 }
+
+
+

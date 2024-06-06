@@ -3,7 +3,7 @@ import { Link, Outlet,useNavigate } from 'react-router-dom'
 import "./Orders.css"
 import { useState } from 'react'
 import { FaArrowLeft} from 'react-icons/fa'
-
+import ScrollToTop from "../../components/ScrollToTop"
 const Orders = () => {
    const [activeLink, setactiveLink] = useState("Ongoing");
    console.log(activeLink);
@@ -14,6 +14,7 @@ const Orders = () => {
 
   return (
     <div>
+      <ScrollToTop/>
       <div className="back-btn" onClick={()=> handleBack()}><FaArrowLeft/></div>
       <div className="orders-wrapper">
         

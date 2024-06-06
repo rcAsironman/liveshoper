@@ -4,12 +4,18 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "./Hero.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
+import img1 from "../../background-image/hero-01.png"
+import img2 from "../../background-image/hero-1.png"
+import img3 from "../../background-image/hero-img-3.png"
+
+
+
 
 const Hero = ({handleClick}) => {
   const slides = [
-    { image: "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", alt: "Personal Shopper" },
-    { image: "https://images.pexels.com/photos/904350/pexels-photo-904350.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", alt: "Personal Shopper" },
-    { image: "https://images.pexels.com/photos/794062/pexels-photo-794062.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", alt: "Personal Shopper" },
+    { image: img1, alt: "Personal Shopper" },
+    { image: img2, alt: "Personal Shopper" },
+    { image: img3, alt: "Personal Shopper" },
   ];
 
   const handleExploreClick = () => {

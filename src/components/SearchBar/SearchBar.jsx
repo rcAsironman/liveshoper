@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./SearchBar.css";
 import Data from "../../utils/Data";
 import SearchSuggestions from "../SearchSuggestions/SearchSuggestions";
+import { FiSearch } from "react-icons/fi";
+import axios from "axios";
+
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,11 +37,24 @@ const SearchBar = () => {
 
   const onSearch = async (searchTerm) => {
     if (searchTerm) {
-      const res = Data.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      res.length > 0 ? setSearchSuggestions(res) : setSearchSuggestions([]);
-      setShowSuggestions(true);
+      try {
+        const response = await axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/product/search-product`, {
+          params: {
+            search: searchTerm,
+            page: 0,
+            size: 10
+          }
+        });
+  
+        const res = response.data.data.content; // Assuming the search results are in the 'content' field
+        res.length > 0 ? setSearchSuggestions(res) : setSearchSuggestions([]);
+        setShowSuggestions(true);
+        console.log("result ", res)
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+        setSearchSuggestions([]);
+        setShowSuggestions(false);
+      }
     } else {
       setSearchSuggestions([]);
       setShowSuggestions(false);
@@ -65,16 +81,16 @@ const SearchBar = () => {
 
   return (
     <div className="search-container">
-      <input
+     <input
         type="text"
         className="search-input"
         placeholder="Search..."
         value={searchTerm}
         onChange={handleChange}
       />
-      <button onClick={() => onSearch(searchTerm)} className="search-btn">
-        Search
-      </button>
+      <div onClick={() => onSearch(searchTerm)} className="search-btn">
+      <FiSearch size={20}/>
+      </div>
      
         {showSuggestions && (
            <div className="search-suggestions-container" ref={searchRef}>

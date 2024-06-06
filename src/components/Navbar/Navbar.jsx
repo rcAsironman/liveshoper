@@ -19,8 +19,8 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [activeLink, setactiveLink] = useState("home");
+  const cartCount = useSelector((state)=> state.cart.cartCount)
   console.log(isAuthenticated);
-  let cartCount = useSelector((state) => state.cart.cartItems.length);
   console.log(cartCount);
 
 
@@ -75,22 +75,15 @@ const Navbar = () => {
                   </li>
                   <li className="nav-link">
                     <Link
-                      onClick={() => setactiveLink("cart")}
+                      onClick={() => setactiveLink("wishlist")}
+                      className={`${activeLink === "wishlist" ? "active" : ""}`}
                       id="link"
-                      to="/cart"
-                      className={`${activeLink === "cart" ? "active" : ""}`}
+                      to="/wishListProducts"
                     >
-                      <div className="cart-link">
-                        <span className="cart"> Cart</span>
-                        {
-                          cartCount > 0 && (<span className="cart-icon">
-                            <span className="cart-count">{cartCount}</span>
-                            <FaCartPlus fontSize={20} />
-                          </span>)
-                        }
-                      </div>
+                      wishlist
                     </Link>
                   </li>
+                 
                   <li className="nav-link">
                     <Link
                       onClick={() => setactiveLink("orders")}
@@ -101,6 +94,26 @@ const Navbar = () => {
                       Orders
                     </Link>
                   </li>
+                  <li className="nav-link">
+                    <Link
+                      onClick={() => setactiveLink("cart")}
+                      id="link"
+                      to="/cart"
+                      className={`${activeLink === "cart" ? "active" : ""}`}
+                    >
+                      <div className="cart-link">
+                        <span className="cart"> Cart</span>
+                        {
+                          cartCount > 0 && (<span className="cart-icon">
+                            <div style={{marginLeft: "-16px"}}>
+                            <span className="cart-count" style={{marginLeft: "-20px", backgroundColor: "red", color: "white"}}>{cartCount}</span>
+                            <FaCartPlus fontSize={20} /></div>
+                          </span>)
+                        }
+                      </div>
+                    </Link>
+                  </li>
+                  
                   <li className="nav-link">
                     <Link
                       onClick={() => setactiveLink("profile")}
@@ -160,8 +173,8 @@ const Navbar = () => {
                 <Link id="link" to="/cart">
                   <p className="cart-link">
                     <span className="cart-icon">
-                      <span className="cart-count">{cartCount}</span>
-                      <FaCartPlus color="white" fontSize={20} />
+                      <span className="cart-count">{cartCount > 9 ? "9+" : cartCount}</span>
+                      <FaCartPlus color="white" fontSize={30} />
                     </span>
                   </p>
                 </Link>
@@ -191,8 +204,18 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li className="nav-link">
+                      <Link id="link" to="/wishListProducts">
+                        Wishlist
+                      </Link>
+                    </li>
+                    <li className="nav-link">
                       <Link id="link" to="/orders">
                         Orders
+                      </Link>
+                    </li>
+                    <li className="nav-link">
+                      <Link id="link" to="/cart">
+                        Cart
                       </Link>
                     </li>
                     <li className="nav-link">
@@ -205,11 +228,7 @@ const Navbar = () => {
                         Contact
                       </Link>
                     </li>
-                    <li className="nav-link">
-                      <Link id="link" to="/cart">
-                        Cart
-                      </Link>
-                    </li>
+                    
                   </>
                 )}
                 <li className="nav-link">

@@ -91,6 +91,8 @@
     border-radius: 50%;
     border: none;
     outline: none;
+    font-size: .7rem;
+    font-weight: 600;
 }
 .cart-total{
     margin-top: .5rem;
@@ -118,5 +120,14 @@
     .cart-img {
         max-width: 60px;
         max-height: 80px;
+        display: non;
+    }
+   
+    .cart-btn{
+        position: relative;
+        top: 10px;
+        left: 10px;
+        background-color: white;
+
     }
 }

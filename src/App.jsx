@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, Navigate,useLocation } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./Pages/HomePage/HomePage";
 import Orders from "./Pages/Orders/Orders";
 import Contact from "./Pages/Contact/Contact";
@@ -19,6 +19,8 @@ import Modal from "./components/Modal/Modal"; // Import Modal component
 import { toggleState } from "./Slices/AuthSlice";
 import Cookies from "js-cookie";
 import SignUp from "./Pages/SignUp/SignUp";
+import WishListProducts from "./Pages/wishList/WishListProducts";
+
 
 const App = () => {
   const dispatch = useDispatch()
@@ -29,12 +31,9 @@ const App = () => {
 
   useEffect(() => {
     // Check if the URL contains "/login"
-    if(Cookies.get('token'))
-    {
+    if (Cookies.get('token')) {
       dispatch(toggleState(true))
-      console.log(Cookies.get('token'))
     }
-    console.log(location.pathname);
     setShowNavbarAndFooter(!location.pathname.includes("/Login"));
   }, [location]);
 
@@ -46,7 +45,7 @@ const App = () => {
 
   return (
     <div>
-      { <Navbar />}
+      {<Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
@@ -154,9 +153,20 @@ const App = () => {
             )
           }
         />
-        <Route 
-         path="/signUp"
-         element={<SignUp/>}
+
+        <Route
+          path="/wishListProducts"
+          element={
+            isAuthenticated ? (
+              <WishListProducts />
+            ) : (
+              <Modal onLoginClick={handleLoginClick} /> // Show modal if not authenticated
+            )
+          }
+        />
+        <Route
+          path="/signUp"
+          element={<SignUp />}
         ></Route>
       </Routes>
       {<Footer />}

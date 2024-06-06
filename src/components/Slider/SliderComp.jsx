@@ -6,12 +6,13 @@ import SliderSettings from "../../utils/SliderSettings/SliderSettings"
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 function SliderComp({ Component, productData }) {
+
   const swiperRef = useRef(null);
   const navigate = useNavigate(); // Use useNavigate hook for programmatic navigation
 
   const handleClick = (item) => {
     // Programmatic navigation to EachProductPage with data
-    navigate("/products", { state: { item } });
+    // navigate("/products", { state: { data: item } });
   };
 
   return (
@@ -20,10 +21,11 @@ function SliderComp({ Component, productData }) {
         <div>
           <SliderButtons />
         </div>
-        {productData.map((item, index) => (
+        {productData.map((data, index) => (
+          
           <SwiperSlide key={index}>
-            <div className="slider-card-container" onClick={() => handleClick(item)}>
-              <Component data={item} />
+            <div className="slider-card-container" onClick={() => handleClick(data)}>
+              <Component data={data} />
             </div>
           </SwiperSlide>
         ))}

@@ -8,7 +8,6 @@ const Footer = () => {
   useEffect(()=>{
     axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/contact-us/find-all?page=0&size=10`)
     .then((response)=>{
-      console.log(response.data.data['content'])
       setContact(response.data.data['content'])
     })
     .catch((error)=>{

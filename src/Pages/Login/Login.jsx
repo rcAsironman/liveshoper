@@ -12,6 +12,9 @@ import Lottie from "lottie-react";
 import loading2 from "../../lottie/loading2.json"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import imageBg1 from "../../background-image/login-bg2.png"
+import imageBg2 from "../../background-image/login-bg.png"
+import { ipAddress } from "../../config";
 
 const Login = () => {
 
@@ -78,7 +81,7 @@ const Login = () => {
 
 
     setIsLoadingActive(true)
-    axios.post(`http://65.2.73.20:8080/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
+    axios.post(`http://${ipAddress}/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
       .then((response) => {
         console.log(response.data)
         const token = response.data.data['token']
@@ -107,9 +110,15 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div className="loginsignup">
-
+    <div className="loginsignup">
+      <div className="login-form">
+       
+      {/* <div className="bg2">
+      <img src={imageBg1} width={'200px'} height={'200px'}/>
+      </div> */}
+      {/* <div className="bg1">
+      <img src={imageBg2} width={'200px'} height={'400px'}/>
+      </div> */}
         <div className="loginsignup-container">
           <div className="loginsignup-fields">
 
@@ -118,6 +127,7 @@ const Login = () => {
               type="email"
               placeholder="Email"
               name="email"
+              className="login-input-field"
               value={formData.email}
               onChange={formDataHandler}
               style={{
@@ -129,6 +139,7 @@ const Login = () => {
               type="password"
               placeholder="Password"
               name="password"
+              className="login-input-field"
               value={formData.password}
               onChange={formDataHandler}
               style={{
@@ -137,7 +148,9 @@ const Login = () => {
             />
              {isValidPassword == false && <div className="error">enter a valid password</div> }
           </div>
-          <button
+          <div
+
+            className="login-btn"
             onClick={() => {
               handleEmailChange()
               handlePasswordChange()
@@ -150,18 +163,29 @@ const Login = () => {
            {
              isLoadingActive === false?  "Continue" : <Lottie className="loading2" animationData={loading2}/>
            }
-          </button>
+          </div>
 
-          <p className="loginsignup-login">
-            Create an account?
-            <Link to="/signUp"><p style={{ color: 'blue' }}>Register here</p></Link>
-          </p>
-
+       
           
         </div>
+        
         <ToastContainer />
+        <div className="login-links">
+     
+           <div> Create an account?
+            <Link to="/signUp"><p style={{ color: 'blue' }}>Register here</p></Link></div>
+            
+           
+            <div>
+            forgot password?
+            <Link to="/signUp"><p style={{ color: 'blue' }}>Recover here</p></Link>
+  
+            </div>            
+          
+      </div>
       </div>
       
+
     </div>
   );
 };

@@ -1,45 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import "swiper/css";
-import "../Slider/SliderComp.css";
-import SliderSettings from "../../utils/SliderSettings/SliderSettings"
-import Data from "../../utils/Data";
+import "./SliderComponentForShoper.css"; // Make sure to create this file
+import SliderSettings from "../../utils/SliderSettings/SliderSettings";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-
-
-
-
-function SliderComponentForShoper({ route, Component }) {
-  
+function SliderComponentForShoper({ route, Component, data }) {
   const swiperRef = useRef(null);
-  const [shopperData, setShopperData] = useState([])
-  useEffect(()=>{
-    axios.get(`http://65.2.73.20:8080/liveshoper/api/v1/employee/get-all-employees?page=0&size=15`)
-    .then((response)=>{
-      setShopperData(response.data.data['content'])
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-  },[])
+  const [shopperData, setShopperData] = useState(data.length > 0?  data : []);
+  
+  // Use useEffect to update shopperData when data prop changes
+  useEffect(() => {
+    setShopperData(data.length > 0 ? data : []);
+  }, [data]);
+
+ 
+  
   return (
-    <div className="slider-container">
+    <div className="shoper-slider-container">
       <Swiper loop={true} {...SliderSettings} ref={swiperRef} spaceBetween={10}>
-        <div>
-          <SliderButtons />
-        </div>
-        {shopperData.slice(0,8).map((item, index) => (
-          <SwiperSlide key={index} >
-            {console.log(item)}
-            <Link  to={`${route}/${item.id}`}>
-              <div
-                
-                className="slider-card-container"
-              >
-                <Component name={item['name']} location={item['address']}/>
-              </div>
+        <SliderButtons />
+        {shopperData.slice(0, 8).map((item, index) => (
+          <SwiperSlide key={index} className="shoper-slide">
+            <Link to={`${route}/${index}`}  
+              state={{
+                data: item
+              }}
+            className="shoper-link">
+              <Component key={index} id={index} name={item['name']} location={item['address']} />
             </Link>
           </SwiperSlide>
         ))}
@@ -55,10 +42,10 @@ const SliderButtons = () => {
   return (
     <div className="swiper-btns">
       <button className="swiper-button-prev" onClick={() => swiper.slidePrev()}>
-        <img src="arrow-right.svg" alt="" />
+        <img src="arrow-right.svg" alt="Previous" />
       </button>
       <button className="swiper-button-next" onClick={() => swiper.slideNext()}>
-        <img src="arrow-right.svg" alt="" />
+        <img src="arrow-right.svg" alt="Next" />
       </button>
     </div>
   );
