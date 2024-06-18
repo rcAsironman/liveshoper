@@ -27,7 +27,7 @@ const Login = () => {
   const [isValidPassword, setIsValidPassword] = useState(null);
   const [isLoadingActive, setIsLoadingActive] = useState(false);
 
- 
+
   const [formData, setformData] = useState({
     username: "",
     password: "",
@@ -60,19 +60,19 @@ const Login = () => {
 
 
   const handleEmailChange = () => {
-    const value  = formData.email;
+    const value = formData.email;
     const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     setIsValidEmail(regex.test(value));
   };
 
   const handlePasswordChange = () => {
-    const value  = formData.password;
-    const regex =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+    const value = formData.password;
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
     setIsValidPassword(regex.test(value));
   };
- 
+
   const handleLoginFailure = () => {
-    toast.error("Incorrect emial or password",{
+    toast.error("Incorrect emial or password", {
       className: 'toast-error'
     });
   }
@@ -89,6 +89,24 @@ const Login = () => {
           Cookies.set('token', token, { expires: expirationDate })
           dispatch(toggleState(true));
           setIsLoadingActive(false);
+          console.log(response.data)
+          axios.get(`http://${ipAddress}/liveshoper/api/v1/user/get-user-by-email?email=${formData.email}`)
+            .then((response) => {
+              const userDa = {
+                "email": formData.email,
+                "token": token,
+                "userId": response.data.data.userId
+              }
+
+              localStorage.setItem("userData", JSON.stringify(userDa))
+              const userDat = JSON.parse(localStorage.getItem("userData"))
+              console.log("user Data is here live ",userDat)
+              console.log("user id ", response.data.data.userId)
+
+            })
+            .catch((error) => {
+              console.log(error)
+            })
           navigate("/");
         }
 
@@ -96,7 +114,7 @@ const Login = () => {
       .catch((error) => {
         setIsLoadingActive(false);
         handleLoginFailure();
-        
+
       })
   };
 
@@ -112,11 +130,11 @@ const Login = () => {
   return (
     <div className="loginsignup">
       <div className="login-form">
-       
-      {/* <div className="bg2">
+
+        {/* <div className="bg2">
       <img src={imageBg1} width={'200px'} height={'200px'}/>
       </div> */}
-      {/* <div className="bg1">
+        {/* <div className="bg1">
       <img src={imageBg2} width={'200px'} height={'400px'}/>
       </div> */}
         <div className="loginsignup-container">
@@ -131,10 +149,10 @@ const Login = () => {
               value={formData.email}
               onChange={formDataHandler}
               style={{
-                border : isValidEmail === false ? '1px solid red' : ''
+                border: isValidEmail === false ? '1px solid red' : ''
               }}
             />
-               {isValidEmail == false && <div className="error">enter a valid email</div> }
+            {isValidEmail == false && <div className="error">enter a valid email</div>}
             <input
               type="password"
               placeholder="Password"
@@ -143,10 +161,10 @@ const Login = () => {
               value={formData.password}
               onChange={formDataHandler}
               style={{
-                border : isValidPassword === false ? '1px solid red' : ''
+                border: isValidPassword === false ? '1px solid red' : ''
               }}
             />
-             {isValidPassword == false && <div className="error">enter a valid password</div> }
+            {isValidPassword == false && <div className="error">enter a valid password</div>}
           </div>
           <div
 
@@ -154,37 +172,36 @@ const Login = () => {
             onClick={() => {
               handleEmailChange()
               handlePasswordChange()
-              if(isValidEmail === true && isValidPassword === true)
-              {
-              login();
-            }
+              if (isValidEmail === true && isValidPassword === true) {
+                login();
+              }
             }}
           >
-           {
-             isLoadingActive === false?  "Continue" : <Lottie className="loading2" animationData={loading2}/>
-           }
+            {
+              isLoadingActive === false ? "Continue" : <Lottie className="loading2" animationData={loading2} />
+            }
           </div>
 
-       
-          
+
+
         </div>
-        
+
         <ToastContainer />
         <div className="login-links">
-     
-           <div> Create an account?
+
+          <div> Create an account?
             <Link to="/signUp"><p style={{ color: 'blue' }}>Register here</p></Link></div>
-            
-           
-            <div>
+
+
+          <div>
             forgot password?
             <Link to="/signUp"><p style={{ color: 'blue' }}>Recover here</p></Link>
-  
-            </div>            
-          
+
+          </div>
+
+        </div>
       </div>
-      </div>
-      
+
 
     </div>
   );

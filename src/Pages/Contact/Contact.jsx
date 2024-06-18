@@ -1,16 +1,29 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { IoCallOutline } from "react-icons/io5";
 import { FaArrowLeft} from 'react-icons/fa'
 import './Contact.css'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateCart } from "../../Slices/CartSlice";
+
+
+
 const Contact = () => {
 
   const navigation = useNavigate()
+  const dispatch = useDispatch()
   const handleBack = () => {
     navigation(-1);
   }
+
+  useEffect(() => {
+    // Load cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    dispatch(updateCart(storedCart));
+  }, []);
+
 
   return (
     <div className="contact">

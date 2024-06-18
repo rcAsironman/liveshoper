@@ -5,8 +5,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaArrowLeft} from 'react-icons/fa'
 import ScrollToTop from "../../components/ScrollToTop";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateCart } from "../../Slices/CartSlice";
+import { updateShoper } from "../../Slices/ShoperSlice";
 const EachShopperPage = () => {
 
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const location = useLocation();
   const {data} = location.state || {}
@@ -17,16 +21,54 @@ const EachShopperPage = () => {
   const [isBooked, setIsBooked] = useState(false)
   const [startTime, setStartTime] = useState('08:00');
   const [endTime, setEndTime] = useState('10:00');
-
-
-
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [removeAccess, setRemoveAccess] = useState(false)
   useEffect(()=>{
     setShopperData(data)
   },[data])
   const handleGoBack = () => {
     navigate(-1)
   }
+
+  console.log("data ", data)
+
+  useEffect(() => {
+    if (isBooked) {
+    }
+  }, [isBooked, bookedData]);
   
+  
+  useEffect(() => {
+    // Load cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    dispatch(updateCart(storedCart));
+    const shoper = JSON.parse(localStorage.getItem('shoperCart'))
+    if(shoper)
+      {
+        
+        console.log("shopper data ", shoper['employeeId'])
+        console.log("data ",data['employeeId'])
+        if(shoper['employeeId'] != data['employeeId'])
+          {
+            setRemoveAccess(true)
+          }
+          else{
+            setIsBooked(true)
+            setList(shoper['itemsList'])
+            setDate(shoper['date'])
+            setIsDisabled(true)
+            setBookedData(shoper) 
+            dispatch(updateShoper(shoper))
+            setRemoveAccess(false)
+            setStartTime(shoper['startTime'])
+            setEndTime(shoper['endTime'])
+          }
+       
+      }
+  }, []);
+
+
+
   const [minDate, setMinDate] = useState('');
   useEffect(() => {
     // Get the current date
@@ -60,10 +102,9 @@ const EachShopperPage = () => {
 // localStorage.removeItem("shoperCart")
   const handleShoperBooking = (shopperData) => {
 
-    if(list != "" && date != ""){
-      setIsBooked(true)
-    }
+  
 
+    console.log("Shopper Data ", shopperData)
   const shoperBookingData = {
       name: shopperData.name,
       mblNum: shopperData.userId.mblNum,
@@ -71,33 +112,35 @@ const EachShopperPage = () => {
       lang: "TELUGU",
       date: date,
       timeStampId: 1,
-      employeeId: shopperData.userId.userId
-    
+      employeeId: shopperData.employeeId, 
+      startTime: startTime ,
+      endTime: endTime
   } 
 
-  console.log("Shopper booking Data ",shoperBookingData)
   localStorage.setItem("shoperCart", JSON.stringify(shoperBookingData))
+  
   const localDa = JSON.parse(localStorage.getItem('shoperCart'))
   setBookedData(localDa)
-  console.log("Local Stored Data ",localDa)
+  if(localDa && list != "")
+    {
+      setIsDisabled(true)
+      setIsBooked(true)
+      dispatch(updateShoper(localDa))
+    }
   }
 
-useEffect(()=>{
-  if(list == "" && date == ""){
-    setIsBooked(false)
-  }
-},[list, date])
+
 
   const handleShoperBookingRemoveBooking = () => {
 
   localStorage.removeItem("shoperCart")
   const localDa = JSON.parse(localStorage.getItem('shoperCart'))
   setBookedData(localDa)
-  console.log("removed from booking ss ",bookedData)
+  setIsDisabled(false)
+  setIsBooked(false)
+  dispatch(updateShoper({}))
   setList("")
-  setDate("")
- 
-  
+  setDate("") 
   }
 
 
@@ -134,78 +177,87 @@ useEffect(()=>{
             </div>
           </div>
         </div>
-        <div className="form-fields">
-          <div className="date-time-input">
-            <div className="field">
-              <label htmlFor="date">Date</label>
-              <input
-                className="shopper-input"
-                type="date"
-                id="date"
-                name="date"
-                min={minDate}
-                value={date}
-                onChange={(e)=>setDate(e.target.value)}
-              />
-            </div>
-            <div className="time-slot">
-            <div className="field">
-              <label htmlFor="time">start Time</label>
-              <input
-                className="shopper-input"
-                type="time"
-                id="time"
-                name="time"
-                value={startTime}
-                onChange={(e)=>setStartTime(e.target.value)}
-              />
-              
-            </div>
-            <div className="field">
-            <label htmlFor="time">End Time</label>
-              <input
-                className="shopper-input"
-                type="time"
-                id="time"
-                name="time"
-                value={endTime}
-                min={startTime}
-                onChange={(e)=>setEndTime(e.target.value)}
-              />
-            </div>
-            </div>
-          </div>
-          <br></br>
-          {/* <div>
-            <label>preferred language</label>
-            <br/>
-              <div className="select-lang">select Language</div>
-              <div className="lang-options">
-                <ul>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-                  <li>Telugu</li>
-
-                </ul>
+        {
+          !removeAccess ? ( <div className="form-fields">
+            <div className="date-time-input">
+              <div className="field">
+                <label htmlFor="date">Date</label>
+                <input
+                  className="shopper-input"
+                  type="date"
+                  id="date"
+                  name="date"
+                  min={minDate}
+                  value={date}
+                  onChange={(e)=>setDate(e.target.value)}
+                  disabled={isDisabled}
+                />
               </div>
-          </div> */}
-          <div className="message-textarea">
-            <label htmlFor="message">List Of Items:</label>
-            <textarea value={list} onChange={(e)=>{setList(e.target.value)}} id="message" name="message" rows="8" cols="50" placeholder="Enter Items Eg: 1) item1,2) item 2"/>
-          </div>
-          {
-            !isBooked ?(        <div className="shopper-book-now-btn" onClick={()=> handleShoperBooking(shopperData)}>Add to cart</div>
-          ) : (
-            <div className="shopper-book-now-btn" onClick={()=> handleShoperBookingRemoveBooking() }>Remove from cart</div>
-          )
-          }
-        </div>
+              <div className="time-slot">
+              <div className="field">
+                <label htmlFor="time">start Time</label>
+                <input
+                  className="shopper-input"
+                  type="time"
+                  id="time"
+                  name="time"
+                  value={startTime}
+                  onChange={(e)=>setStartTime(e.target.value)}
+                  disabled={isDisabled}
+                />
+                
+              </div>
+              <div className="field">
+              <label htmlFor="time">End Time</label>
+                <input
+                  className="shopper-input"
+                  type="time"
+                  id="time"
+                  name="time"
+                  value={endTime}
+                  min={startTime}
+                  onChange={(e)=>setEndTime(e.target.value)}
+                  disabled={isDisabled}
+                />
+              </div>
+              </div>
+            </div>
+            <br></br>
+            {/* <div>
+              <label>preferred language</label>
+              <br/>
+                <div className="select-lang">select Language</div>
+                <div className="lang-options">
+                  <ul>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+                    <li>Telugu</li>
+  
+                  </ul>
+                </div>
+            </div> */}
+            <div className="message-textarea">
+              <label htmlFor="message" >List Of Items:</label>
+              <textarea disabled={isDisabled} value={list} onChange={(e)=>{setList(e.target.value)}} id="message" name="message" rows="8" cols="50" placeholder="Enter Items Eg: 1) item1,2) item 2"/>
+            </div>
+            {
+              !isBooked ?(        <div className="shopper-book-now-btn" onClick={()=> handleShoperBooking(shopperData)}>Add to cart</div>
+            ) : (
+              <div className="shopper-book-now-btn" onClick={()=> handleShoperBookingRemoveBooking() }>Remove from cart</div>
+            )
+            }
+          </div>) 
+
+          : (<div className="not-allowed">
+            your shopper is already in your cart...
+          </div>)
+        }
       </div>
     </div>
   );

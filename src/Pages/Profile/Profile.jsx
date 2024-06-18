@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import { FaEdit } from "react-icons/fa";
 import { FaRegSave } from "react-icons/fa";
 import { FaArrowLeft} from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateCart } from "../../Slices/CartSlice";
+import { updateShoper } from "../../Slices/ShoperSlice";
+
 
 const Profile = () => {
+
+  const dispatch = useDispatch()
   const [userDetails, setuserDetails] = useState({
     firstName: "karthik",
     lastName: "Mangineni",
@@ -29,6 +35,23 @@ const Profile = () => {
     navigation("/");
   }
   
+  useEffect(() => {
+    // Load cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    dispatch(updateCart(storedCart));
+  }, []);
+
+  useEffect(()=>{
+    const localDa = JSON.parse(localStorage.getItem('shoperCart'))
+    dispatch(updateShoper(null))
+    if(localDa)
+      {
+        dispatch(updateShoper(localDa))
+      }
+      else{
+        dispatch(updateShoper(null))
+      }
+  },[])
   
   return (
    <div>

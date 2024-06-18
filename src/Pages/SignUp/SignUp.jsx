@@ -91,6 +91,7 @@ const SignUp = () => {
 
 
   // call this login function after signup 
+
   const login = async () => {
 
 
@@ -103,6 +104,24 @@ const SignUp = () => {
           Cookies.set('token', token, { expires: expirationDate })
           dispatch(toggleState(true));
           setIsLoadingActive(false);
+          console.log(response.data)
+          axios.get(`http://${ipAddress}/liveshoper/api/v1/user/get-user-by-email?email=${formData.email}`)
+            .then((response) => {
+              const userDa = {
+                "email": formData.email,
+                "token": token,
+                "userId": response.data.data.userId
+              }
+
+              localStorage.setItem("userData", JSON.stringify(userDa))
+              const userDat = JSON.parse(localStorage.getItem("userData"))
+              console.log("user Data is here live ",userDat)
+              console.log("user id ", response.data.data.userId)
+
+            })
+            .catch((error) => {
+              console.log(error)
+            })
           navigate("/");
         }
 
@@ -113,6 +132,30 @@ const SignUp = () => {
         
       })
   };
+
+
+  // const login = async () => {
+
+
+  //   setIsLoadingActive(true)
+  //   axios.post(`http://${ipAddress}/liveshoper/api/v1/user/login?user=${formData.email}&password=${formData.password}`)
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       const token = response.data.data['token']
+  //       if (response.status === 200) {
+  //         Cookies.set('token', token, { expires: expirationDate })
+  //         dispatch(toggleState(true));
+  //         setIsLoadingActive(false);
+  //         navigate("/");
+  //       }
+
+  //     })
+  //     .catch((error) => {
+  //       setIsLoadingActive(false);
+  //       handleSignUpFailure(error);
+        
+  //     })
+  // };
 
   // signUp function
   const signUp = async () => {

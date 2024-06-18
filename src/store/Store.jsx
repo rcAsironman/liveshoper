@@ -11,7 +11,7 @@ reducer: {
     cart:cartReducer,
     initialDataFromApi: initialData,
     WishList: wishListReducer,
-    shoperCart: shoperReducer
+    shoper: shoperReducer
   },
 });
 

@@ -59,7 +59,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         position: relative;
-
+        left: 0px;
     }
     .wishlist-name{
         display: flex;
@@ -69,8 +69,97 @@
     
     .heading{
         position: relative;
-        left: -170px;
-        top: 20px;
+        left: -290px;
+        top: 25px;
+        font-size: large;
+        font-weight: 600;
+    }
+
+    .card-container{
+        margin-top: 20px;
+    }
+
+    .empty-wishlist{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 0px;
+        left: 0px
+    }
+}
+
+@media (max-width: 420px){
+    .wishList-body{
+        height: 100vh;
+    }
+    .products-data{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        position: relative;
+        left: -10px;
+    }
+    .wishlist-name{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        position: relative;
+  
+    }
+    
+    .heading{
+        position: relative;
+        left: -240px;
+        top: 27px;
+        font-size: large;
+        font-weight: 600;
+    }
+
+    .card-container{
+        margin-top: 20px;
+    }
+
+    .empty-wishlist{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 0px;
+        left: 0px
+    }
+}
+
+@media (max-width: 370px){
+    .heading{
+        position: relative;
+        left: -220px;
+        top: 26px;
+        font-size: large;
+        font-weight: 600;
+    }
+}
+
+@media (max-width: 350px){
+    .wishList-body{
+        height: 100vh;
+    }
+    .products-data{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        position: relative;
+        left: 50px;
+        width: 200px;
+    }
+    .wishlist-name{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    
+    .heading{
+        position: relative;
+        left: -230px;
+        top: 25px;
         font-size: large;
         font-weight: 600;
     }

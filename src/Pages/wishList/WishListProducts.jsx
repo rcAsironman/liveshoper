@@ -9,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import { updateWishList } from "../../Slices/WishListSlice";
 import Lottie from 'lottie-react';
 import Empty from "../../lottie/wishlistEmpty.json"
+import { updateCart } from '../../Slices/CartSlice';
+import { updateShoper } from '../../Slices/ShoperSlice';
+
 function WishListProducts() {
   const [data, setData] = useState([]);
   const [images, setImages] = useState({});
@@ -18,8 +21,27 @@ function WishListProducts() {
   const [isAllWishListProductsFalse, setISAllWishListProductsFalse] = useState(true)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   console.log(data)
+
+
+  useEffect(() => {
+    // Load cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    dispatch(updateCart(storedCart));
+  }, []);
+
+  useEffect(()=>{
+    const localDa = JSON.parse(localStorage.getItem('shoperCart'))
+    dispatch(updateShoper(null))
+    if(localDa)
+      {
+        dispatch(updateShoper(localDa))
+      }
+      else{
+        dispatch(updateShoper(null))
+      }
+  },[])
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("wishlist")) || [];
     setData(storedData);
@@ -36,6 +58,8 @@ function WishListProducts() {
         setISAllWishListProductsFalse(false)
       }
   },[data])
+
+
   useEffect(() => {
     const fetchImages = async () => {
       try {

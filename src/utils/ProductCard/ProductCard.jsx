@@ -97,13 +97,13 @@ const ProductCard = (data) => {
         <div onClick={handleProductClick}>
           <div className="product-image-container">
 
-            <img src={imageUrl} alt="product image" className="product-image" />
+            <img loading="eager" src={imageUrl} alt="product image" className="product-image" />
           </div>
           <div className="product-info">
-            {data.data.productName.length < 20 ? (
+            {data.data.productName.length < 18 ? (
               <p className="product-details">{data.data.productName}</p>
             ) : (
-              <p className="product-details">{data.data.productName.slice(0, 20) + "..."}</p>
+              <p className="product-details">{data.data.productName.slice(0, 18) + "..."}</p>
             )}
             <div className="prices">
               <p className="product-discounted-price" style={{ color: 'green', fontWeight: '400' }}>₹{data.data.price}</p>

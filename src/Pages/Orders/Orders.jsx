@@ -1,10 +1,21 @@
 import React from 'react'
 import { Link, Outlet,useNavigate } from 'react-router-dom'
 import "./Orders.css"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaArrowLeft} from 'react-icons/fa'
 import ScrollToTop from "../../components/ScrollToTop"
+import { useDispatch } from 'react-redux'
+import { updateCart } from '../../Slices/CartSlice'
+import { updateShoper } from '../../Slices/ShoperSlice'
+
+
+
+
+
+
 const Orders = () => {
+
+  const dispatch = useDispatch()
    const [activeLink, setactiveLink] = useState("Ongoing");
    console.log(activeLink);
    const navigation = useNavigate()
@@ -12,6 +23,25 @@ const Orders = () => {
      navigation("/");
    }
 
+   useEffect(() => {
+    // Load cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    dispatch(updateCart(storedCart));
+  }, []);
+
+ 
+
+  useEffect(()=>{
+    const localDa = JSON.parse(localStorage.getItem('shoperCart'))
+    dispatch(updateShoper(null))
+    if(localDa)
+      {
+        dispatch(updateShoper(localDa))
+      }
+      else{
+        dispatch(updateShoper(null))
+      }
+  },[])
   return (
     <div>
       <ScrollToTop/>

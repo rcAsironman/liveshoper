@@ -20,10 +20,9 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [activeLink, setactiveLink] = useState("home");
   const cartCount = useSelector((state)=> state.cart.cartCount)
-  console.log(isAuthenticated);
-  console.log(cartCount);
+  const shopperData = useSelector((state)=>state.shoper.shoperList);
 
-
+ console.log("shopper Data ", shopperData, "cart count ", cartCount)
   const toggleMenu = () => {
     setisSearchOpen(false);
     setOpenMenu((prev) => !prev);
@@ -103,10 +102,10 @@ const Navbar = () => {
                     >
                       <div className="cart-link">
                         <span className="cart"> Cart</span>
-                        {
-                          cartCount > 0 && (<span className="cart-icon">
+                        { 
+                          (cartCount >0 || shopperData)&& (<span className="cart-icon">
                             <div style={{marginLeft: "-16px"}}>
-                            <span className="cart-count" style={{marginLeft: "-20px", backgroundColor: "red", color: "white"}}>{cartCount}</span>
+                            <span className="cart-count"  style={{marginLeft: "-20px", backgroundColor: "red", color: "white"}}>{cartCount > 9 ? "9+" : cartCount + (shopperData != null || shopperData != undefined ? 1 : 0)}</span>
                             <FaCartPlus fontSize={20} /></div>
                           </span>)
                         }
@@ -168,12 +167,13 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="mobile-nav">
-            {isAuthenticated && cartCount > 0 && (
+
+            {isAuthenticated && (cartCount > 0 || shopperData) && (
               <li className="nav-link">
                 <Link id="link" to="/cart">
                   <p className="cart-link">
                     <span className="cart-icon">
-                      <span className="cart-count">{cartCount > 9 ? "9+" : cartCount}</span>
+                      <span className="cart-count">{cartCount > 9 ? "9+" : cartCount + (shopperData != null || shopperData != undefined ? 1 : 0)}</span>
                       <FaCartPlus color="white" fontSize={30} />
                     </span>
                   </p>

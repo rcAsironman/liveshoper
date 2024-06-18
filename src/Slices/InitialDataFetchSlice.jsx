@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const InitialDataFetchSlice = createSlice({
     name: 'initialDataFromApi',
     initialState: {
-        catg: "snacks",
+        catg: "Decoration Items",
         data: null,  // Initial data is set to null
         
     },

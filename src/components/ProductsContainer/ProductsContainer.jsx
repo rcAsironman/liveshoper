@@ -101,7 +101,7 @@ const ProductsContainer = () => {
         //This method is for fetching snacks, Clothing e.t.c
         fetchSubCategories().then((response) => {
 
-          fetchProducts(response[0].subCategoryId, response[0].subCategoryName);
+          fetchProducts(response[4].subCategoryId, response[4].subCategoryName);
         });
 
       });

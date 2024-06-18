@@ -26,7 +26,7 @@ function SliderComponentForShoper({ route, Component, data }) {
                 data: item
               }}
             className="shoper-link">
-              <Component key={index} id={index} name={item['name']} location={item['address']} />
+              <Component key={index} id={item['employeeId']} name={item['name']} location={item['address']} />
             </Link>
           </SwiperSlide>
         ))}

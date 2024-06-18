@@ -20,6 +20,11 @@ import { toggleState } from "./Slices/AuthSlice";
 import Cookies from "js-cookie";
 import SignUp from "./Pages/SignUp/SignUp";
 import WishListProducts from "./Pages/wishList/WishListProducts";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import TermsAndServices from "./Pages/TermsAndServices";
+import FAQs from "./Pages/FAQs/FAQs";
+import OrderSuccess from "./Pages/OrderSuccess/OrderSuccess";
+import OrderReject from "./Pages/OrderReject/OrderReject";
 
 
 const App = () => {
@@ -167,6 +172,28 @@ const App = () => {
         <Route
           path="/signUp"
           element={<SignUp />}
+        ></Route>
+        <Route
+        path="/privacyPolicy"
+        element={<PrivacyPolicy/>}
+        ></Route>
+        <Route
+        path="/termsAndServices"
+        element={<TermsAndServices/>}
+        ></Route>
+        <Route
+        path="/faqs"
+        element={<FAQs/>}
+        ></Route>
+
+        <Route
+        path="/order-success"
+        element={<OrderSuccess/>}
+        ></Route>
+
+        <Route 
+        path="/order-reject"
+        element={<OrderReject/>}
         ></Route>
       </Routes>
       {<Footer />}

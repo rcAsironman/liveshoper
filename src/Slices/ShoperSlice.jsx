@@ -16,7 +16,6 @@ const ShopperSlice = createSlice({
         updateShoper: (state, action) => {
             const updatedShoper = action.payload;
             state.shoperList = updatedShoper;
-            state.shoperLength = updatedShoper.length;
           },
     }
 })

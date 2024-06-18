@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Footer.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
 
@@ -31,9 +32,9 @@ const Footer = () => {
           </div>
           <div class="useful-links details">
             <h3>Useful Links</h3>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">FAQs</a>
+            <Link  to="/termsAndServices">Terms of Service</Link>
+            <Link  to="/privacyPolicy">Privacy Policy</Link>
+            <Link  to="/faqs">FAQs</Link>
           </div>
         </div>
       </div>

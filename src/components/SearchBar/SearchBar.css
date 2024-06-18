@@ -1,23 +1,26 @@
+/* Search Container */
 .search-container {
     display: flex;
-    max-width: 400px;
+    max-width: 300px;
     margin: 0 auto;
     position: relative;
 }
 
+/* Search Input */
 .search-input {
     width: 90%;
-    padding: 0px 10px;
+    padding: 0 10px;
     border: 1px solid white;
-    border-radius: 20px 0 0px 20px;
+    border-radius: 20px 0 0 20px;
     font-size: 16px;
     outline: none;
     height: 35px;
 }
 
+/* Search Button */
 .search-btn {
     padding: 10px;
-    border-radius: 0 20px 20px 0 ;
+    border-radius: 0 20px 20px 0;
     cursor: pointer;
     height: 35px;
     background-color: rgb(255, 254, 254);
@@ -28,6 +31,115 @@
     border: none;
 }
 
-.search-input:focus,.search-btn:focus {
+/* Search Input and Button Focus */
+.search-input:focus,
+.search-btn:focus {
     border-color: #007bff;
+}
+
+/* Suggestions Container */
+.search-suggestions-container {
+    position: absolute;
+    width: 400px;
+    max-width: 400px;
+    top: 3rem;
+    left: -80px;
+    background: whitesmoke;
+    border-radius: 4px;
+    color: black;
+    overflow-y: auto;
+    max-height: 400px;
+    
+}
+
+/* Custom Scrollbar */
+.search-suggestions-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.search-suggestions-container::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 4px;
+}
+
+/* Suggestions Wrapper */
+.suggestions-wrapper {
+    position: relative;
+    padding: 10px;
+    color: gray;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Suggestions Display */
+.suggestions-display {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+}
+
+/* Close Button */
+.close {
+    position: sticky;
+    top: 10px;
+    margin-left: 90%;
+    margin-top: 10px;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Product Image */
+.suggestions-display img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+/* Product Name */
+.product-name {
+    width: 370%;
+}
+
+/* Each Product */
+.each-product {
+    display: flex;
+    margin-top: 20px;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.product-image{
+    object-fit: contain;
+}
+/* Media Queries */
+@media (max-width: 768px) {
+    .search-suggestions-container {
+        width: 100%;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        left: 0px;
+    }
+
+    .suggestions-display {
+        width: 100%;
+        color: black;
+    }
+
+    .product-name {
+        width: 100%;
+    }
 }

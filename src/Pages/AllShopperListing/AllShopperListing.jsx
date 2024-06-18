@@ -73,11 +73,12 @@ const AllShopperListing = () => {
       <div className="products-container">
         {shopperData.map((item, index) => (
           <Link  key={item.id} to={`/shoppers/${item.id}`}
+         
           state={{
             data: item
           }}
           >
-            <ProfileCard  id={index} name={item.name} location={item.address} />
+            <ProfileCard  id={item.employeeId} name={item.name} location={item.address} />
           </Link>
         ))}
       </div>

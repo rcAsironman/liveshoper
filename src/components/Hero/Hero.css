@@ -66,6 +66,9 @@
   
 }
 
+
+
+
 @media (max-width:600px) {
 
     .bg{
@@ -101,6 +104,56 @@
     }
     .hero-right{
         height: 100%;
+    }
+  
+
+
+   
+}
+
+
+
+
+@media (max-width:400px) {
+
+    .bg{
+        height: 260px;
+
+    }
+
+    .btn{
+        display: none;
+    }
+    .hero-wrapper{
+        height: 100%;
+        display: flex;
+    }
+  
+    .hero-left .title, .para{
+        color: black;
+        font-size: medium;
+        
+    }
+
+    .shopper-image{
+        height: 100%;
+        width: 200px;
+    }
+
+   .hero-container {
+         display: flex;
+         flex-direction: row;
+         background-color: #77c1b7;
+         height: 100%;
+    }
+
+    .hero-left{
+        width: 35%;
+        padding-left: 20px;
+    }
+    .hero-right{
+        height: 100%;
+        width: 60%;
     }
   
 

@@ -76,17 +76,15 @@
         width: 220px;
     }
 }
-
-
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .profile-container {
-        width: 170px;
-        height: auto;
+        width: 180px;
+        height: 300px;
         padding: .5rem;
         gap: .3rem;
         font-size: .8rem;
         margin: 0rem;
-        margin-left: -4px;
+        margin-left: 2px;
     }
 
     .card-btn {
@@ -103,3 +101,32 @@
 
     }
 }
+
+
+
+
+@media (max-width: 400px) {
+    .profile-container {
+        width: 160px;
+        height: 300px;
+        padding: .5rem;
+        gap: 1rem;
+        font-size: .8rem;
+        margin: 0rem;
+    }
+
+    .card-btn {
+        font-size: .9rem;
+        padding: .3rem .8rem;
+    }
+
+    .image-container {
+        padding: 0;
+    }
+
+    .card-wrapper:hover {
+        scale: 1;
+
+    }
+}
+
